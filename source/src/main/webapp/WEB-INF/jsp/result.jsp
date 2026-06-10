@@ -1,6 +1,6 @@
 <!-- 
- 作成日：
- 作成者：
+ 作成日：服部、深井
+ 作成者：2026/06/10
  更新者：
  更新日： 
  -->
@@ -16,9 +16,31 @@
 	<link rel="stylesheet" href="css/result.css">
 </head>
 <body>
+	<!-- ヘッダー -->
+	<header>
+		<div>
+			<h1><img src="logo.png" alt="ぽちため"></h1>
+		</div>
+	</header>
+	
+	<!-- メイン -->
+	<main>
+		<div class="error">
+			<img src="img/error.png">
+			<h1><c:out value="${errorTitle}"></c:out></h1>
+		</div>
+		<c:out value="${errorMsg}" escapeXml="false"></c:out>
+		<a href="${goTo}" class="trans">自動で遷移しない場合はこちら</a>
+	</main>
 
 	<!-- スクリプト -->
-	<script src="js/common.js"></script>
-	<script src="js/result.js"></script>
+	<script>
+		'use strict';
+		
+		setTimeout(function() {
+			window.location.href = '${goTo}';
+		}, 2200);
+		
+	</script>
 </body>
 </html>
