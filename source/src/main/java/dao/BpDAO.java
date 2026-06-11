@@ -11,19 +11,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import model.Bp;
-
 public class BpDAO {
 	
 	// データベースの情報を格納するフィールド
 	private final String URL = "jdbc:mysql://localhost:3306/d4?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true";
-	private final String USER = "root";
+	private final String USER = "d4";
 	private final String PASS = "password";
 	
 	// 引数bpで指定されたレコードを登録し、成功したらtrueを返す
-	public boolean insert(Bp bp) {
-		
-	}
+	
 	
 	// 接続を行うメソッド
 	private Connection getConnection() {

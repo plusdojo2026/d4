@@ -30,13 +30,13 @@
 		
 			<div class="input-box">
 				<label for="mail">メールアドレス</label><br>
-				<input type="email" id="mail" class="input" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelMail}"/>>
+				<input type="text" id="mail" class="input" name="mail" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelMail}"/>>
 				<span class="message" id="mail-error"></span>
 			</div>
 			
 			<div class="input-box">
 				<label for="pass">パスワード</label><br>
-				<input type="password" id="pass" class="input" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelPass}"/>>
+				<input type="password" id="pass" class="input" name="pass" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelPass}"/>>
 				<span id="change-pass" class="eye"><img id="eye-img" src="img/close-eye.png"></span>
 				<span class="message" id="ps-error"></span>
 			</div>
