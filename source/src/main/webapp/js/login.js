@@ -1,7 +1,7 @@
 /* 作成日：2026/06/10
  * 作成者：服部
- * 更新者：
- * 更新日： */
+ * 更新者：佐藤、服部
+ * 更新日：2026/06/11 */
 
 'use strict';
 
@@ -46,7 +46,7 @@ form.onsubmit = function(event) {
 		MAIL_INPUT.style.border = 'solid 2px #FF0000';
 	} else {
 		mailErrorMsg.textContent = '';
-		mailBorder.style.border = 'solid 2px #000000';
+		MAIL_INPUT.style.border = 'solid 2px #000000';
 	}
 	
 	//パスワードのチェック

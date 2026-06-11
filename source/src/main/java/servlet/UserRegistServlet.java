@@ -1,7 +1,7 @@
 /* 作成日：2026/6/10
  * 作成者：深井
- * 更新者：
- * 更新日： */
+ * 更新者：服部
+ * 更新日：2026/06/11 */
 
 package servlet;
 
@@ -22,31 +22,36 @@ public class UserRegistServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	// doGetメソッド
-	protected void doGet(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ユーザ登録：doGet");
 		request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp").forward(request, response);
 	}
 
 	// doPostメソッド
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("ユーザ登録：doPost");
+		
+		// リクエストパラメータの取得
 		request.setCharacterEncoding("UTF-8");
-
 		String mail = request.getParameter("mail");
 		String pass = request.getParameter("pass");
 		String checkPass = request.getParameter("check-pass");
 
+		// ユーザ情報をセット
 		User user = new User();
 		user.setMail(mail);
 		user.setPass(pass);
 
+		// ユーザ登録
 		UserDAO dao = new UserDAO();
 		boolean result = dao.insert(user);
-
-		if (result) {
+		
+		if (result) {	// 登録成功
+			System.out.println("ユーザ登録成功！");
 			request.setAttribute("success", true);
 			request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp").forward(request, response);
-		} else {
+		} else {		// 登録失敗
+			System.out.println("ユーザ登録失敗、、");
 			request.setAttribute("cancelMail", mail);
 			request.setAttribute("cancelPass", pass);
 			request.setAttribute("cancelCheckPass", checkPass);
