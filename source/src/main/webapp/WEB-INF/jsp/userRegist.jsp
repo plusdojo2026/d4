@@ -63,12 +63,13 @@
 	</main>
 	
 	<!-- スクリプト -->
+	<script src="js/userRegist.js"></script>
 	<c:if test="${success == true}">
 		<script>
 			alert("登録成功！");
 			window.location.href = "/d4/LoginServlet";
 		</script>
 	</c:if>
-	<script src="js/userRegist.js"></script>
+	
 </body>
 </html>
