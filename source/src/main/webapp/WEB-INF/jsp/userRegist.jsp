@@ -12,13 +12,12 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>ユーザー登録</title>
-	<link rel="stylesheet" href="css/common.css">
 	<link rel="stylesheet" href="css/user.css">
 </head>
 <body>
 	<!-- ヘッダー -->
 	<header>
-		<div>
+		<div class=logo>   <!-- class追加 -->
 			<h1><img src="img/logo.png" alt="ぽちため"></h1>
 		</div>
 	</header>
@@ -28,31 +27,34 @@
 		<!-- 入力フォーム -->
 		<form method="POST" action="/d4/UserRegistServlet" id="user-regist-form">
 		
+		<div class="input-form">  <!-- class追加 -->
 			<div class="input-box">
 				<label for="regist-mail">メールアドレス</label><br>
-				<input type="text" id="regist-mail" class="input" name="mail" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelMail}"/>>
+				<input type="text" id="regist-mail" class="input" name="mail" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelMail}"/>><br>
 				<span class="message" id="regist-mail-error"></span>
 			</div>
 			
 			<div class="input-box">
 				<label for="regist-pass">パスワード</label><br>
-				<input type="password" id="regist-pass" class="input" name="pass" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelPass}"/>>
-				<span id="change-pass" class="eye"><img id="eye-img" src="img/close-eye.png"></span>
+				<input type="password" id="regist-pass" class="input" name="pass" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelPass}"/>><br>
+				<span id="change-pass" ><img id="eye-img" class="eye" src="img/close-eye.png"></span>
 				<span class="message" id="regist-ps-error"></span>
 			</div>
 			
 			<div class="input-box">
 				<label for="check-pass">パスワード確認</label><br>
-				<input type="password" id="check-pass" class="input" name="check-pass" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelCheckPass}"/>>
-				<span id="change-check-pass" class="eye"><img id="check-eye-img" src="img/close-eye.png"></span>
+				<input type="password" id="check-pass" class="input" name="check-pass" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelCheckPass}"/>><br>
+				<span id="change-check-pass"><img id="check-eye-img" class="eye" src="img/close-eye.png"></span>
 				<span class="message" id="check-ps-error"></span>
 			</div>
+		</div>
+		
 			
-			<div class="error">
-				<span class="message" id="regist-error"><c:out value="${message}"></c:out></span>
+			<div class="error"> <!-- class追加↓ -->
+				<span class="error-message" id="regist-error"><c:out value="${message}"></c:out></span>
 			</div>
 			
-			<div>
+			<div class="button"> <!-- class追加 -->
 				<input type="submit" name="regist" value="登録">
 			</div>
 		</form>

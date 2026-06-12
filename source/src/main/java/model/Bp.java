@@ -40,17 +40,6 @@ public class Bp implements Serializable {
 	public String getDay() { return this.day; }
 	
 	// コンストラクタ
-	public Bp() {
-		this.id = 0;
-		this.mail = "";
-		this.cid = 0;
-		this.money = 0;
-		this.memo = "";
-		this.year = "";
-		this.month = "";
-		this.day = "";
-	}
-	
 	public Bp(int id, String mail, int cid, int money, String memo, String year, String month, String day) {
 		this.id = id;
 		this.mail = mail;
@@ -60,6 +49,17 @@ public class Bp implements Serializable {
 		this.year = year;
 		this.month = month;
 		this.day = day;
+	}
+	
+	public Bp() {
+		this.id = 0;
+		this.mail = "";
+		this.cid = 0;
+		this.money = 0;
+		this.memo = "";
+		this.year = "";
+		this.month = "";
+		this.day = "";
 	}
 	
 }
