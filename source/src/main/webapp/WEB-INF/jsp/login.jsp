@@ -17,7 +17,7 @@
 <body>
 	<!-- ヘッダー -->
 	<header>  
-		<div class=logo>   <!-- class追加 -->
+		<div class="logo">   <!-- class追加 -->
 			<h1><img src="img/logo.png" alt="ぽちため"></h1>
 		</div>
 	</header>

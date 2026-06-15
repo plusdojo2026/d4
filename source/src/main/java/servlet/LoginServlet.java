@@ -67,7 +67,8 @@ public class LoginServlet extends HttpServlet {
 				dispatcher.forward(request, response);
 			}
 		} catch (Exception e) {
-			request.setAttribute("errorMsg",e.getMessage());
+			request.setAttribute("errorMsg", e.getMessage());
+			request.setAttribute("goTo", "/d4/LoginServlet");
 			// 結果ページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
 			dispatcher.forward(request, response);

@@ -1,7 +1,7 @@
 /* 作成日：2026/06/10
  * 作成者：木下
- * 更新者：
- * 更新日： */
+ * 更新者：服部
+ * 更新日：2026/06/15 */
 
 package dao;
 
@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import model.Bp;
-import model.Category;
+import model.SearchResult;
 
 public class BpDAO {
 	
@@ -60,12 +60,12 @@ public class BpDAO {
 		// 例外処理	
 		} catch (SQLException e){
 			
-			throw new Exception("収支登録を失敗しました！\n管理者に連絡してください。");
+			throw new Exception("収支登録に失敗しました！<br>管理者に連絡してください。");
 		
 		// 最終的に必ず行う処理
 		} finally {
 			
-			closeAll(con,pStmt);
+			closeAll(con, null, pStmt);
 			
 		}
 		
@@ -86,7 +86,7 @@ public class BpDAO {
 		try {
 			con = getConnection();
 			
-			// INSERT文を準備する
+			// UPDATE文を準備する
 			String sql = "UPDATE Bp SET cid=?, money=?, memo=?, year=?, month=?, day=?"
 					+ "WHERE id=?";
 			pStmt = con.prepareStatement(sql);
@@ -113,12 +113,12 @@ public class BpDAO {
 		// 例外処理	
 		} catch (SQLException e){
 			
-			throw new Exception("収支編集を失敗しました！\n管理者に連絡してください。");
+			throw new Exception("収支編集に失敗しました！<br>管理者に連絡してください。");
 		
 		// 最終的に必ず行う処理
 		} finally {
 			
-			closeAll(con,pStmt);
+			closeAll(con, null, pStmt);
 			
 		}
 		
@@ -126,90 +126,142 @@ public class BpDAO {
 		return result;
 	}
 	
-	// 引数bp,ctgで指定された項目で検索して、取得されたデータのリストを返す(メール照合用)
-		public List<Bp> mailSelect(Bp bp) throws Exception {
-			System.out.println("DAO: メール照合開始");
-			Connection con = null;
-			ResultSet rs = null;
-			PreparedStatement pStmt = null;
+	// 引数idで指定されたレコードを削除し、成功ならtrueを返す
+	public boolean delete(int id) throws Exception {
+		System.out.println("DAO: 収支削除開始");
+		Connection con = null;
+		PreparedStatement pStmt = null;
 			
-			List<Bp> bpList = new ArrayList<Bp>();
+		// 削除結果を格納する
+		boolean result = false;
 			
-			try {
-				con = getConnection();
+		try {
+			con = getConnection();
 				
-				// SELECT文を準備する
-				String sql = "SELECT * FROM Bp WHERE mail=?";
-				pStmt = con.prepareStatement(sql);
+			// DELETE文を準備する
+			String sql = "DELETE FROM Bp WHERE id=?";
+			pStmt = con.prepareStatement(sql);
 				
-				// ？の部分に値を入れる処理
-				pStmt.setString(1, bp.getMail());
+			// ？の部分に値を入れる処理
+			pStmt.setInt(1, id);
 				
-				// SELECT文を実行し、結果表を取得する
-				rs = pStmt.executeQuery();
-				
-				// 結果表をコレクションにコピーする
-				while (rs.next()) {
-					Bp bpTable = new Bp(rs.getInt("id"), rs.getString("mail"), rs.getInt("cid"), 
-							rs.getInt("money"), rs.getString("memo"), rs.getString("year"),
-							rs.getString("month"), rs.getString("day"));
-					bpList.add(bpTable);		
-				}
-				
-			// 例外処理	
-			} catch (SQLException e){
-				
-				throw new Exception("メール照合を失敗しました！\n管理者に連絡してください。");
-			
-			// 最終的に必ず行う処理
-			} finally {
-				
-				closeAll(con,rs,pStmt);
-				
+			// SQL文を実行する
+			if (pStmt.executeUpdate() == 1) {
+				System.out.println("収支削除完了");
+				result = true;
 			}
+				
+		// 例外処理	
+		} catch (SQLException e){
+				
+			throw new Exception("収支削除に失敗しました！\n管理者に連絡してください。");
 			
-			// 結果を返す
-			return bpList;
-			
+		// 最終的に必ず行う処理
+		} finally {
+				
+			closeAll(con, null, pStmt);
+				
 		}
+			
+		// 結果を返す
+		return result;
+		
+	}
 	
-	// 引数bp,ctgで指定された項目で検索して、取得されたデータのリストを返す(検索ページ用)
-	public List<Bp> searchSelect(Bp bp, Category ctg) throws Exception {
+	// 引数mail,kindが一致するものを検索して、取得されたデータのリストを返す(マイページ用)
+	public List<Bp> mailSelect(String mail, int kind) throws Exception {
+		System.out.println("DAO: 収支一覧取得開始");
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pStmt = null;
+			
+		List<Bp> bpList = new ArrayList<Bp>();
+			
+		try {
+			con = getConnection();
+				
+			// SELECT文を準備する
+			String sql = "SELECT b.month, SUM(b.money) FROM Bp b INNER JOIN Category c ON b.cid = c.id"
+					+ "WHERE b.mail=? AND c.kind=? GROUP BY month";
+			pStmt = con.prepareStatement(sql);
+				
+			// ？の部分に値を入れる処理
+			pStmt.setString(1, mail);
+			pStmt.setInt(2, kind);
+			
+			// SELECT文を実行し、結果表を取得する
+			rs = pStmt.executeQuery();
+				
+			// 結果表をコレクションにコピーする
+			while (rs.next()) {
+				Bp bpTable = new Bp(mail, rs.getInt(2), rs.getString("month"));
+				bpList.add(bpTable);
+			}
+				
+			System.out.println("収支一覧取得完了");
+			
+		// 例外処理	
+		} catch (SQLException e){
+				
+			throw new Exception("収支合計取得に失敗しました！<br>管理者に連絡してください。");
+			
+		// 最終的に必ず行う処理
+		} finally {
+				
+			closeAll(con,rs,pStmt);
+				
+		}
+			
+		// 結果を返す
+		return bpList;
+			
+	}
+	
+	// 引数year, month, keywordで指定された項目で検索して、取得されたデータのリストをsortで指定された順に並び替えて返す(検索ページ用)
+	public List<SearchResult> searchSelect(String mail, String year, String month, int sort, String keyWord) throws Exception {
 		System.out.println("DAO: 検索開始");
 		Connection con = null;
 		ResultSet rs = null;
 		PreparedStatement pStmt = null;
 		
-		List<Bp> bpList = new ArrayList<Bp>();
+		List<SearchResult> srList = new ArrayList<SearchResult>();
 		
 		try {
 			con = getConnection();
 			
 			// SELECT文を準備する
-			String sql = "SELECT * FROM Bp INNER JOIN Category ON Bp.cid = Category.id"
-					+ "WHERE (Category.name LIKE ? OR Bp.memo LIKE ?) AND (Bp.year LIKE ? AND Bp.month LIKE ?)";
+			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id"
+					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?)";
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる処理
-			if (ctg.getName() != null) {
-				pStmt.setString(1, "%" + ctg.getName() + "%");
-			} else {
-				pStmt.setString(1, "%");
-			}
-			if (bp.getMemo() != null) {
-				pStmt.setString(2, "%" + bp.getMemo() + "%");
+			pStmt.setString(1, mail);
+			if (keyWord != null) {
+				pStmt.setString(2, "%" + keyWord + "%");
 			} else {
 				pStmt.setString(2, "%");
 			}
-			if (bp.getYear() != null) {
-				pStmt.setString(3, "%" + bp.getYear() + "%");
+			if (keyWord != null) {
+				pStmt.setString(3, "%" + keyWord + "%");
 			} else {
 				pStmt.setString(3, "%");
 			}
-			if (bp.getMonth() != null) {
-				pStmt.setString(4, "%" + bp.getMonth() + "%");
+			if (year != null) {
+				pStmt.setString(4, year);
 			} else {
 				pStmt.setString(4, "%");
+			}
+			if (month != null) {
+				pStmt.setString(5, month);
+			} else {
+				pStmt.setString(5, "%");
+			}
+			if (sort == 1) {
+				pStmt.setString(6, "DESC");
+			} else if(sort == 2) {
+				pStmt.setString(6, "ASC");
+			} else {
+				pStmt.setString(6, "DESC");
 			}
 			
 			// SELECT文を実行し、結果表を取得する
@@ -217,16 +269,18 @@ public class BpDAO {
 			
 			// 結果表をコレクションにコピーする
 			while (rs.next()) {
-				Bp bpTable = new Bp(rs.getInt("id"), rs.getString("mail"), rs.getInt("cid"), 
-						rs.getInt("money"), rs.getString("memo"), rs.getString("year"),
-						rs.getString("month"), rs.getString("day"));
-				bpList.add(bpTable);		
+				SearchResult sr = new SearchResult (rs.getInt("b.id"), rs.getString("b.mail"), rs.getInt("b.cid"), 
+						rs.getInt("b.money"), rs.getString("b.memo"), rs.getString("b.year"), rs.getString("b.month"), 
+						rs.getString("b.day"), rs.getString("c.cname"), "", 0);
+				srList.add(sr);		
 			}
+			
+			System.out.println("検索完了");
 			
 		// 例外処理	
 		} catch (SQLException e){
 			
-			throw new Exception("検索を失敗しました！\n管理者に連絡してください。");
+			throw new Exception("検索に失敗しました！<br>管理者に連絡してください。");
 		
 		// 最終的に必ず行う処理
 		} finally {
@@ -236,12 +290,12 @@ public class BpDAO {
 		}
 		
 		// 結果を返す
-		return bpList;
+		return srList;
 		
 	}
 	
-	// 引数bp,ctgで指定された項目で検索して、取得されたデータのリストを返す(集計表ページ用)
-		public List<Bp> tableSelect(Bp bp, Category ctg) throws Exception {
+	// 引数mail,year,kindで指定された項目で検索して、取得されたデータのリストを返す(集計表ページ用)
+		public List<Bp> tableSelect(String mail, String year, int kind) throws Exception {
 			System.out.println("DAO: 集計表作成開始");
 			Connection con = null;
 			ResultSet rs = null;
@@ -253,28 +307,28 @@ public class BpDAO {
 				con = getConnection();
 				
 				// SELECT文を準備する
-				String sql = "SELECT * FROM Bp INNER JOIN Category ON Bp.cid = Category.id"
-						+ "WHERE Bp.year=? ";
+				String sql = "SELECT b.month, SUM(b.money) FROM Bp b INNER JOIN Category c ON b.cid = c.id"
+						+ "WHERE b.mail=? AND b.year=? AND c.kind=? GROUP BY month ORDER BY b.month ASC";
 				pStmt = con.prepareStatement(sql);
 				
 				// ？の部分に値を入れる処理	
-				pStmt.setString(1, bp.getYear());
+				pStmt.setString(1, mail);
+				pStmt.setString(2, year);
+				pStmt.setInt(3, kind);
 				
 				// SELECT文を実行し、結果表を取得する
 				rs = pStmt.executeQuery();
 				
 				// 結果表をコレクションにコピーする
 				while (rs.next()) {
-					Bp bpTable = new Bp(rs.getInt("id"), rs.getString("mail"), rs.getInt("cid"), 
-							rs.getInt("money"), rs.getString("memo"), rs.getString("year"),
-							rs.getString("month"), rs.getString("day"));
+					Bp bpTable = new Bp(rs.getString("mail"), rs.getInt(2), rs.getString("month"));
 					bpList.add(bpTable);		
 				}
 				
 			// 例外処理	
 			} catch (SQLException e){
 				
-				throw new Exception("集計表作成を失敗しました！\n管理者に連絡してください。");
+				throw new Exception("集計表作成に失敗しました！<br>管理者に連絡してください。");
 			
 			// 最終的に必ず行う処理
 			} finally {
@@ -288,71 +342,56 @@ public class BpDAO {
 			
 		}
 	
-	// 接続を行うメソッド
-	private Connection getConnection() {
-		
-		Connection con = null;
-		try {
-			// JDBCドライバを読み込む
-			Class.forName("com.mysql.cj.jdbc.Driver");
-			// データベースに接続する
-			con = DriverManager.getConnection(URL, USER, PASS);
-			System.out.println("DB接続");
-		// 例外処理
-		} catch(SQLException e) {
-			e.printStackTrace();
-		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
-		}
-		
-		return con;
-	}
-		
-	// 切断を行うメソッド
-	private void closeAll(Connection con, ResultSet rs, PreparedStatement pStmt) {
-		
-		// Connection切断
-		if(con != null) {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		// PreparedStatement切断
-		if(pStmt != null) {
-			try {
-				pStmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		System.out.println("DB切断");
-	}
-	
-	private void closeAll(Connection con, PreparedStatement pStmt) {
-		
-		// Connection切断
-		if(con != null) {
-			try {
-				con.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		// PreparedStatement切断
-		if(pStmt != null) {
-			try {
-				pStmt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
-		}
-		
-		System.out.println("DB切断");
-	}
+		// 接続を行うメソッド
+		private Connection getConnection() throws Exception {
 
-}
+			Connection con = null;
+			try {
+				// JDBCドライバを読み込む
+				Class.forName("com.mysql.cj.jdbc.Driver");
+				// データベースに接続する
+				con = DriverManager.getConnection(URL, USER, PASS);
+				System.out.println("DB接続");
+				// 例外処理
+			} catch (ClassNotFoundException e) {
+				throw new IllegalStateException("DB接続処理に失敗しました！<br>管理者に連絡してください。");
+			} catch (SQLException e) {
+				throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
+			}
+
+			return con;
+		}
+			
+		// 切断を行うメソッド
+		private void closeAll(Connection con, ResultSet rs, PreparedStatement pStmt) throws Exception {
+
+			// Connection切断
+			if (con != null) {
+				try {
+					con.close();
+				} catch (SQLException e) {
+					throw new Exception("DB切断処理に失敗しました！<br>管理者に連絡してください。");
+				}
+			}
+			
+			// ResultSet切断
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (SQLException e) {
+					throw new Exception("DB切断処理に失敗しました！<br>管理者に連絡してください。");
+				}
+			}
+
+			// PreparedStatement切断
+			if (pStmt != null) {
+				try {
+					pStmt.close();
+				} catch (SQLException e) {
+					throw new Exception("DB切断処理に失敗しました！<br>管理者に連絡してください。");
+				}
+			}
+
+			System.out.println("DB切断");
+		}
+	}

@@ -51,6 +51,17 @@ public class Bp implements Serializable {
 		this.day = day;
 	}
 	
+	public Bp(String mail, int money, String month) {
+		this.id = 0;
+		this.mail = mail;
+		this.cid = 0;
+		this.money = money;
+		this.memo = "";
+		this.year = "";
+		this.month = month;
+		this.day = "";
+	}
+	
 	public Bp() {
 		this.id = 0;
 		this.mail = "";

@@ -1,7 +1,7 @@
 /* 作成日：2026/06/12
  * 作成者：深井
- * 更新者：2026/06/12
- * 更新日：服部 */
+ * 更新者：服部
+ * 更新日：2026/06/15 */
 
 package dao;
 
@@ -32,11 +32,13 @@ public class PurposeDAO {
 			con = getConnection();
 			
 			// SELECT文を準備する
-			String sql = "INSERT INTO purpose (mail, text) VALUES (?, '')";
+			String sql = "INSERT INTO Purpose (mail, text) VALUES (?, ''), (?, ''), (?, '')";
 			pStmt = con.prepareStatement(sql);
 
 			// ？の部分に値を入れる
-			pStmt.setString(1, mail);
+			for(int i = 1; i <= 3; i++) {
+				pStmt.setString(i, mail);
+			}
 
 			// 追加できたかを確認する
 			if(pStmt.executeUpdate() >= 1) {
@@ -46,7 +48,7 @@ public class PurposeDAO {
 		
 		// 例外処理
 		} catch (SQLException e) {
-			throw new Exception("目的登録に失敗しました！\n管理者に連絡してください。");
+			throw new Exception("目的登録に失敗しました！<br>管理者に連絡してください。");
 			
 		// 最終的に必ず行う処理
 		} finally {
@@ -69,7 +71,8 @@ public class PurposeDAO {
 			pStmt = con.prepareStatement(sql);
 
 			// ？の部分に値を入れる
-			pStmt.setInt(1, purpose.getId());
+			pStmt.setString(1, purpose.getText());
+			pStmt.setInt(2, purpose.getId());
 
 			// 追加できたかを確認する
 			if(pStmt.executeUpdate() >= 1) {
@@ -79,7 +82,7 @@ public class PurposeDAO {
 		
 		// 例外処理
 		} catch (SQLException e) {
-			throw new Exception("目的編集に失敗しました！\n管理者に連絡してください。");
+			throw new Exception("目的編集に失敗しました！<br>管理者に連絡してください。");
 			
 		// 最終的に必ず行う処理
 		} finally {
@@ -101,7 +104,7 @@ public class PurposeDAO {
 			con = getConnection();
 
 			// SELECT文を準備する
-			String sql = "SELECT * FROM purpose WHERE mail = ?";
+			String sql = "SELECT * FROM Purpose WHERE mail = ?";
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる
@@ -120,7 +123,7 @@ public class PurposeDAO {
 			
 		// 例外処理
 		} catch (SQLException e) {
-			throw new Exception("目的一覧取得に失敗しました！\n管理者に連絡してください。");
+			throw new Exception("目的一覧取得に失敗しました！<br>管理者に連絡してください。");
 		
 		// 最終的に必ず行う処理
 		} finally {
@@ -142,9 +145,9 @@ public class PurposeDAO {
 			System.out.println("DB接続");
 			// 例外処理
 		} catch (ClassNotFoundException e) {
-			throw new IllegalStateException("DB接続処理に失敗しました！\n管理者に連絡してください。");
+			throw new IllegalStateException("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 		} catch (SQLException e) {
-			throw new Exception("DB接続処理に失敗しました！\n管理者に連絡してください。");
+			throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 		}
 
 		return con;
@@ -158,7 +161,7 @@ public class PurposeDAO {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				throw new Exception("DB切断に失敗しました！\n管理者に連絡してください。");
+				throw new Exception("DB切断に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
 		
@@ -167,7 +170,7 @@ public class PurposeDAO {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				throw new Exception("DB切断に失敗しました！\n管理者に連絡してください。");
+				throw new Exception("DB切断に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
 
@@ -176,7 +179,7 @@ public class PurposeDAO {
 			try {
 				pStmt.close();
 			} catch (SQLException e) {
-				throw new Exception("DB切断に失敗しました！\n管理者に連絡してください。");
+				throw new Exception("DB切断に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
 

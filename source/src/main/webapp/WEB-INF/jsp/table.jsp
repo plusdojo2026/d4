@@ -2,7 +2,7 @@
  作成日：2026/06/11
  作成者：服部瑚夏
  更新者：
- 更新日： 
+ 更新日：2026/06/15
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -33,15 +33,15 @@
 		<div class="sum-box">
 			<div class="sum">
 				収入<br>
-				<c:out value="${income}"></c:out>
+				<p class="income"><c:out value="${yearIncome}"></c:out></p>
 			</div>
 			<div class="sum">
 				支出<br>
-				<c:out value="${expense}"></c:out>
+				<p class="expense"><c:out value="${yearExpense}"></c:out></p>
 			</div>
 			<div class="sum">
 				貯蓄
-				<c:out value="${saving}"></c:out>
+				<c:out value="${yearIncome - yearExpense}"></c:out>
 			</div>
 		</div>
 		
@@ -56,7 +56,17 @@
 					<td><c:out value="${sum.month}"></c:out></td>
 					<td><c:out value="${sum.income}"></c:out></td>
 					<td><c:out value="${sum.expense}"></c:out></td>
-					<td><c:out value="${sum.income - sum.expense}"></c:out></td>
+					<c:choose>
+						<c:when test="${(sum.income - sum.expense) > 0}">
+							<td style="color: #00b9ef;"><c:out value="${sum.income - sum.expense}"></c:out></td>
+						</c:when>
+						<c:when test="${(sum.income - sum.expense) < 0}">
+							<td style="color: #ef0000;">-<c:out value="${sum.income - sum.expense}"></c:out></td>
+						</c:when>
+						<c:when test="${(sum.income - sum.expense) == 0}">
+							<td><c:out value="${sum.income - sum.expense}"></c:out></td>
+						</c:when>
+					</c:choose>
 				</tr>
 			</c:forEach>
 		</table>

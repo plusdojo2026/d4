@@ -1,7 +1,7 @@
 /* 作成日：2026/6/10
  * 作成者：深井
- * 更新者：2026/6/11
- * 更新日：服部瑚夏 */
+ * 更新者：服部瑚夏
+ * 更新日：2026/6/15 */
 
 package dao;
 
@@ -21,7 +21,7 @@ public class UserDAO {
 	private final String PASS = "password";
 
 	// 引数で指定されたUserでログイン成功ならuser情報を返す
-	public User isLoginOk(User inputUser) {
+	public User isLoginOk(User inputUser) throws Exception {
 		System.out.println("DAO: ログイン開始");
 		Connection con = null;
 		ResultSet rs = null;
@@ -57,7 +57,7 @@ public class UserDAO {
 
 			// 例外処理
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("ログイン失敗しました！<br>管理者に連絡してください。");
 
 			// 最終的に必ず行う処理
 		} finally {
@@ -69,7 +69,7 @@ public class UserDAO {
 	}
 
 	// 引数で指定されたUserで更新成功ならuser情報を返す
-	public User update(User user) {
+	public User update(User user) throws Exception {
 		System.out.println("DAO: 更新開始");
 		Connection con = null;
 		ResultSet rs = null;
@@ -115,7 +115,7 @@ public class UserDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			throw new Exception("情報更新に失敗しました！<br>管理者に連絡してください。");
 
 		} finally {
 			closeAll(con, rs, pStmt);
@@ -125,7 +125,7 @@ public class UserDAO {
 	}
 	
 	// 引数で指定されたUserで新規登録成功ならtrueを返す
-	public boolean insert(User user) {
+	public boolean insert(User user) throws Exception {
 		System.out.println("DAO: 新規登録");
 		Connection con = null;
 		PreparedStatement pStmt = null;
@@ -146,7 +146,11 @@ public class UserDAO {
 			}
 
 		} catch (SQLException e) {
-			e.printStackTrace();
+			if (e.getErrorCode() == 1062) {
+				System.out.println("登録済みユーザのため登録未完了");
+				return false;
+			}
+			throw new Exception("ユーザー登録に失敗しました！<br>管理者に連絡してください。");
 		} finally {
 			closeAll(con, null, pStmt);
 		}
@@ -155,7 +159,7 @@ public class UserDAO {
 	}
 
 	// 接続を行うメソッド
-	private Connection getConnection() {
+	private Connection getConnection() throws Exception {
 
 		Connection con = null;
 		try {
@@ -165,24 +169,24 @@ public class UserDAO {
 			con = DriverManager.getConnection(URL, USER, PASS);
 			System.out.println("DB接続");
 			// 例外処理
-		} catch (SQLException e) {
-			e.printStackTrace();
 		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
+			throw new IllegalStateException("DB接続処理に失敗しました！<br>管理者に連絡してください。");
+		} catch (SQLException e) {
+			throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 		}
 
 		return con;
 	}
 
 	// 切断を行うメソッド
-	private void closeAll(Connection con, ResultSet rs, PreparedStatement pStmt) {
+	private void closeAll(Connection con, ResultSet rs, PreparedStatement pStmt) throws Exception {
 
 		// Connection切断
 		if (con != null) {
 			try {
 				con.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
 		
@@ -191,7 +195,7 @@ public class UserDAO {
 			try {
 				rs.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
 
@@ -200,7 +204,7 @@ public class UserDAO {
 			try {
 				pStmt.close();
 			} catch (SQLException e) {
-				e.printStackTrace();
+				throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
 
