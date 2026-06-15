@@ -90,6 +90,7 @@ public class MyPageServlet extends HttpServlet {
 			dispatcher.forward(request, response);
 			
 		} catch (Exception e) {
+			request.setAttribute("goTo", "/d4/MyPageServlet");
 			request.setAttribute("errorMsg", e.getMessage());
 			// 結果ページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");

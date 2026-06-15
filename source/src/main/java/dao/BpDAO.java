@@ -181,7 +181,7 @@ public class BpDAO {
 			con = getConnection();
 				
 			// SELECT文を準備する
-			String sql = "SELECT b.month, SUM(b.money) FROM Bp b INNER JOIN Category c ON b.cid = c.id"
+			String sql = "SELECT b.month, SUM(b.money) FROM Bp b INNER JOIN Category c ON b.cid = c.id "
 					+ "WHERE b.mail=? AND c.kind=? GROUP BY month";
 			pStmt = con.prepareStatement(sql);
 				
@@ -230,7 +230,7 @@ public class BpDAO {
 			con = getConnection();
 			
 			// SELECT文を準備する
-			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id"
+			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id "
 					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?)";
 			pStmt = con.prepareStatement(sql);
 			
@@ -307,7 +307,7 @@ public class BpDAO {
 				con = getConnection();
 				
 				// SELECT文を準備する
-				String sql = "SELECT b.month, SUM(b.money) FROM Bp b INNER JOIN Category c ON b.cid = c.id"
+				String sql = "SELECT b.month, SUM(b.money) FROM Bp b INNER JOIN Category c ON b.cid = c.id "
 						+ "WHERE b.mail=? AND b.year=? AND c.kind=? GROUP BY month ORDER BY b.month ASC";
 				pStmt = con.prepareStatement(sql);
 				
