@@ -11,9 +11,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 import model.Bp;
+import model.BpView;
 import model.SearchResult;
 
 public class BpDAO {
@@ -87,7 +90,7 @@ public class BpDAO {
 			con = getConnection();
 			
 			// UPDATE文を準備する
-			String sql = "UPDATE Bp SET cid=?, money=?, memo=?, year=?, month=?, day=?"
+			String sql = "UPDATE Bp SET cid=?, money=?, memo=?, year=?, month=?, day=? "
 					+ "WHERE id=?";
 			pStmt = con.prepareStatement(sql);
 			
@@ -224,14 +227,15 @@ public class BpDAO {
 		ResultSet rs = null;
 		PreparedStatement pStmt = null;
 		
-		List<SearchResult> srList = new ArrayList<SearchResult>();
+		Map<String, SearchResult> map = new LinkedHashMap<>();
+		List<SearchResult> srList = null;
 		
 		try {
 			con = getConnection();
 			
 			// SELECT文を準備する
 			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id "
-					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?)";
+					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?) ORDER BY b.day ?";
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる処理
@@ -269,11 +273,31 @@ public class BpDAO {
 			
 			// 結果表をコレクションにコピーする
 			while (rs.next()) {
-				SearchResult sr = new SearchResult (rs.getInt("b.id"), rs.getString("b.mail"), rs.getInt("b.cid"), 
+				String date = rs.getString("b.year") + "/" + rs.getString("b.month") + "/" + rs.getString("b.day");
+				
+				Bp bp = new Bp(rs.getInt("b.id"), rs.getString("b.mail"), rs.getInt("b.cid"), 
 						rs.getInt("b.money"), rs.getString("b.memo"), rs.getString("b.year"), rs.getString("b.month"), 
-						rs.getString("b.day"), rs.getString("c.cname"), "", 0);
-				srList.add(sr);		
+						rs.getString("b.day"));
+				String cname = rs.getString("c.cname");
+				int kind = rs.getInt("c.kind");
+				
+				// 新しい日付の場合の処理
+				if(!map.containsKey(date)) {
+					// SearchResultインスタンスを生成して、date, 空のBpリスト、sumを入れる。
+					SearchResult sr = new SearchResult();
+					sr.setDate(date);
+					sr.setBpView(new ArrayList<>());
+					sr.setSum(0);
+					
+					map.put(date, sr);
+				}
+				
+				SearchResult sr = map.get(date);
+				sr.getBpView().add(new BpView(bp, cname, kind));
+				sr.setSum(sr.getSum() + bp.getMoney());
+				
 			}
+			srList = new ArrayList<SearchResult>(map.values());
 			
 			System.out.println("検索完了");
 			
@@ -293,7 +317,7 @@ public class BpDAO {
 		return srList;
 		
 	}
-	
+		
 	// 引数mail,year,kindで指定された項目で検索して、取得されたデータのリストを返す(集計表ページ用)
 		public List<Bp> tableSelect(String mail, String year, int kind) throws Exception {
 			System.out.println("DAO: 集計表作成開始");
@@ -321,7 +345,7 @@ public class BpDAO {
 				
 				// 結果表をコレクションにコピーする
 				while (rs.next()) {
-					Bp bpTable = new Bp(rs.getString("mail"), rs.getInt(2), rs.getString("month"));
+					Bp bpTable = new Bp(mail, rs.getInt(2), rs.getString("month"));
 					bpList.add(bpTable);		
 				}
 				

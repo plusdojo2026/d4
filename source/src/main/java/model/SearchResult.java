@@ -1,32 +1,33 @@
 package model;
 
-public class SearchResult extends Bp {
+import java.util.ArrayList;
+import java.util.List;
+
+public class SearchResult {
 	
 	// フィールド
-	private String cname;	// カテゴリー名
-	private String date;	// 日付
-	private int sum;		// 収支合計
+	private List<BpView> bpView;	// 収支リスト
+	private String date;		// 日付
+	private int sum;			// 収支合計
 	
 	// セッター
-	public void setCname(String cname) { this.cname = cname; }
+	public void setBpView(List<BpView> bpView) { this.bpView = bpView; }
 	public void setDate(String date) { this.date = date; }
 	public void setSum(int sum) { this.sum = sum; }
 	
 	// ゲッター
-	public String getCname() { return this.cname; }
+	public List<BpView> getBpView() { return this.bpView; }
 	public String getDate() { return this.date; }
 	public int getSum() { return this.sum; }
 	
 	// コンストラクタ
-	public SearchResult(int id, String mail, int cid, int money, String memo, String year, String month, String day, String cname, String date, int sum) {
-		super(id, mail, cid, money, memo, year, month, day);
-		this.cname = cname;
+	public SearchResult(List<BpView> bpView, String date, int sum) {
+		this.bpView = bpView;
 		this.date = date;
 		this.sum = sum;
 	}
 	public SearchResult() {
-		super();
-		this.cname = "";
+		this.bpView = new ArrayList<BpView>();
 		this.date = "";
 		this.sum = 0;
 	}

@@ -73,7 +73,7 @@
 	</main>
 	<footer>
 		<nav class="nav">
-			<ul>
+			<ul class="imgs">
 				<li><a href="/d4/MyPageServlet"><img src="img/mypage.png" alt="マイページ"></a></li>
 				<li><a href="/d4/MoneyRegistServlet"><img src="img/money-regist.png" alt="収支登録"></a></li>
 				<li><a href="/d4/SearchServlet"><img src="img/search.png" alt="検索"></a></li>

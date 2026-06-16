@@ -1,6 +1,123 @@
-/* 作成日：
- * 作成者：
+/* 作成日：2026/06/12
+ * 作成者：佐藤
  * 更新者：
  * 更新日： */
 
 @charset "UTF-8";
+
+/*ヘッダー*/
+.header {
+	display: flex;
+	align-items: center;
+}
+
+form[id='logout-form'] {
+	margin: 0 20px 0 auto;
+}
+
+#form-logout {
+	font-size: 12px;
+	width: 80px;
+	padding: 3px 12px 3px 12px;
+	border-radius: 30px;
+	color: #FFFFFF;
+	background-color: indianred;
+	border: 1.5px solid rgb(55, 55, 55);
+}
+
+/* 目的題名 */
+.purpose-title {
+	padding-top: 20px;
+	padding-left: 10px;
+	display: flex;
+	align-items: center;
+	gap: 8px;
+	font-size: 25px;
+}
+.purpose-title img, .img-title img {
+	width: 40px;
+	margin: 0;
+}
+
+/* 目的・目標金額・貯金額表示欄 */
+.purpose-box {
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	height: 140px;
+	padding: 15px 20px 20px 35px;
+	margin: 15px 5%;
+	font-weight: bold;
+	background-color: #feffee;
+	border: solid 3px #ffea7e;
+	border-radius: 30px;
+}
+
+/* 目的表示 */
+.purpose {
+	font-size: 20px;
+	font-weight: 400;
+}
+.purpose ul {
+	margin: 0;
+	padding-left: 20px;
+	list-style-type: square;
+}
+
+/* 目標金額と貯金額のテーブル */
+.purpose-table {
+	margin: 0 auto;
+	border-collapse: collapse;
+	font-size: 16px;
+	background-color: cornsilk;
+	width: 90%;
+}
+
+td {
+	border: 1.7px solid #999;
+	text-align: center;
+}
+
+.target-amount, .saving-amount {
+	text-align: right;
+	padding-right: 10px;
+}
+
+.saving-title {
+	font-weight: normal;
+	width: 45%;
+}
+
+.saving-amount {
+	font-weight: normal;
+	width: 55%;
+}
+
+/* 画像設定コンテンツ(後からできたらやる部分) */
+.img-title {
+	padding-top: 40px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	gap: 8px;
+	font-size: 20px;
+	color: rgb(55, 55, 55);
+}
+
+.upload-area {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	gap: 10px;
+	margin-top: 30px;
+	color: rgb(55, 55, 55);
+}
+
+#input-img-form {
+	display: flex;
+	justify-content: center;
+}
+
+.dust-box {
+	width: 25px;
+}
