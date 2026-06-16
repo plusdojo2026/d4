@@ -1,7 +1,7 @@
 /* 作成日：2026/6/10
  * 作成者：深井
- * 更新者：服部瑚夏
- * 更新日：2026/6/15 */
+ * 更新日：2026/6/15
+ * 更新者：服部, 深井 */
 
 package dao;
 
@@ -63,7 +63,7 @@ public class UserDAO {
 		} finally {
 			closeAll(con, rs, pStmt);
 		}
-		
+
 		// 結果を返す
 		return user;
 	}
@@ -81,22 +81,22 @@ public class UserDAO {
 			// 1つ目のSELECT文を準備する
 			String sql = "UPDATE User SET name=?, target=?, trans=? WHERE mail=?";
 			pStmt = con.prepareStatement(sql);
-			
+
 			// ?の部分に値を入れる処理
 			pStmt.setString(1, user.getName());
 			pStmt.setInt(2, user.getTarget());
 			pStmt.setString(3, user.getTrans());
 			pStmt.setString(4, user.getMail());
-			
+
 			// UPDATE文を実行してpStmtのclose処理
 			pStmt.executeUpdate();
 			closeAll(null, rs, pStmt);
 			System.out.println("更新完了");
-			
+
 			// SELECT文を準備する
 			sql = "SELECT * FROM User WHERE `mail`=?";
 			pStmt = con.prepareStatement(sql);
-			
+
 			// ？の部分に値を入れる処理
 			pStmt.setString(1, user.getMail());
 
@@ -123,7 +123,7 @@ public class UserDAO {
 
 		return user;
 	}
-	
+
 	// 引数で指定されたUserで新規登録成功ならtrueを返す
 	public boolean insert(User user) throws Exception {
 		System.out.println("DAO: 新規登録");
@@ -151,6 +151,39 @@ public class UserDAO {
 				return false;
 			}
 			throw new Exception("ユーザー登録に失敗しました！<br>管理者に連絡してください。");
+		} finally {
+			closeAll(con, null, pStmt);
+		}
+
+		return result;
+	}
+
+	// アカウントを削除(追加)
+	public boolean delete(String mail) throws Exception {
+		System.out.println("DAO: 削除");
+
+		Connection con = null;
+		PreparedStatement pStmt = null;
+		boolean result = false;
+
+		try {
+			con = getConnection();
+
+			// DELETE文を準備する
+			String sql = "DELETE FROM User WHERE mail = ?";
+			pStmt = con.prepareStatement(sql);
+
+			// ？の部分に値を入れる
+			pStmt.setString(1, mail);
+
+			// 削除できたかを確認する
+			if (pStmt.executeUpdate() >= 1) {
+				System.out.println("削除成功");
+				result = true;
+			}
+
+		} catch (SQLException e) {
+			throw new Exception("アカウント削除に失敗しました！<br>管理者に連絡してください。");
 		} finally {
 			closeAll(con, null, pStmt);
 		}
@@ -189,7 +222,7 @@ public class UserDAO {
 				throw new Exception("DB接続処理に失敗しました！<br>管理者に連絡してください。");
 			}
 		}
-		
+
 		// ResultSet切断
 		if (rs != null) {
 			try {
