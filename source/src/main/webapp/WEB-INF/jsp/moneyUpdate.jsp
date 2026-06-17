@@ -2,17 +2,11 @@
  作成日：2026/06/10
  作成者：木下、佐藤
  更新者：服部
- 更新日：2026/06/11
+ 更新日：2026/06/17
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ page import="java.util.Date, java.text.SimpleDateFormat" %>
-<%
-    // サーバー側で現在日時を取得
-    Date now = new Date();
-	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-    request.setAttribute("today", sdf.format(now));
-%>
+
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -33,12 +27,10 @@
 		<div class="money-title">
 			<img src="img/money-update-logo.png">
 			収支編集
-			<form method="POST" action="/d4/MoneyUpdateServlet" id="change-update-kind">
-				<div class="button">
-					<button type="submit" value="1">収入</button>
-					<button type="submit" value="2">支出</button><br>
-				</div>
-			</form>
+			<div class="button">
+				<button class="income-btn">収入</button>
+				<button class="expense-btn">支出</button><br>
+			</div>
 		</div>
 		
 		<!-- 実際の入力フォーム -->
@@ -46,33 +38,28 @@
 			<div class="content">
 				
 				<div class="money-input">
-					日付<input type="date" name="date" value="${today}"><br>
+					日付<input type="date" name="date" value="${date}"><br>
 				</div>
 				
 				<div class="money-input">
-					金額<input type="text" name="money"><br>
+					金額<input type="text" name="money" class="money" value="${money}"><br>
 				</div>
 				
 				<div class="money-input">
 					カテゴリ
-					<select>
-						<c:forEach var="category" items="${categoryList}">
-							<option value="${category.id}">
-								<c:out value="${category.name}"></c:out>
-							</option>
-						</c:forEach>
-					</select><br>
+					<select class="select-box"></select><br>
 				</div>
 				
 				<div class="money-input">
-					<div class="memo">
+					<div class="memo-box">
 						メモ<br>
-						<input type="text" name="memo"><br>
+						<textarea name="memo" class="memo"><c:out value="${memo}"></c:out></textarea>
 					</div>
 				</div>
 				
 			</div>
-			
+			<input type="hidden" name="id" value="${id}">
+			<input type="hidden" name="cid" class="hidden-cid">
 			<input class="return" type="submit" name="return" value="戻る">
 			<input class="conf" type="submit" name="conf" value="確定">
 			
@@ -91,8 +78,25 @@
 	</footer>
 	
 	<!-- スクリプト -->
+	<script>
+		const SELECTED_ID = "${cid}";
+		const INCOME_CATEGORY_LIST = [];
+		<c:forEach var="category" items="${incomeCategoryList}">
+			INCOME_CATEGORY_LIST.push({id: "${category.id}", name: "${category.name}"});
+		</c:forEach>
+		const EXPENSE_CATEGORY_LIST = [];
+		<c:forEach var="category" items="${expenseCategoryList}">
+			EXPENSE_CATEGORY_LIST.push({id: "${category.id}", name: "${category.name}" });
+		</c:forEach>
+	</script>
 	<script src="js/common.js"></script>
 	<script src="js/money.js"></script>
 	<script src="js/moneyUpdate.js"></script>
+	<c:if test="${success == true}">
+		<script>
+			alert("編集成功！");
+			window.location.href = "/d4/SearchServlet";
+		</script>
+	</c:if>
 </body>
 </html>

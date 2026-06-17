@@ -29,11 +29,11 @@
 			<div class="category-setting">
 				<div class="category-title">
 					カテゴリ設定
-					<button onclick="showCategory()">収入</button>
-					<button onclick="showCategory()">支出</button>
+					<button class="income-btn">収入</button>
+					<button class="expense-btn">支出</button>
 				</div>
 				<div class="category">
-					<c:forEach var="category" items="${incomeList}">
+					<c:forEach var="category" items="${incomeCategoryList}">
 						<div class="category-input">
 							<input type="text" value="${category.name}">
 							<img src="img/dust-box.png">
@@ -47,38 +47,36 @@
 			<div class="user-setting">
 				<div class="set-box">
 					ニックネーム
-					<input type="text" name="name" class="input" placeholder="ホーム画面で表示されます">
+					<input type="text" name="name" class="input" placeholder="ホーム画面で表示されます" value="${name}">
 				</div>
 				<div class="set-box">
 					目的
-					<input type="text" name="p1" class="input" placeholder="1つ目">
-					<input type="text" name="p2" class="input" placeholder="2つ目">
-					<input type="text" name="p3" class="input" placeholder="3つ目">
-					<input type="hidden" name="p1Id" value="${p1.id}">
-					<input type="hidden" name="p2Id" value="${p2.id}">
-					<input type="hidden" name="p3Id" value="${p3.id}">
+					<c:forEach var="purpose" items="${purposeList}">
+						<input type="text" name="text" class="input" value="${purpose.text}">
+						<input type="hidden" name="id" value="${purpose.id}">
+					</c:forEach>
 				</div>
 				<div class="set-box">
 					目標金額
-					<input type="text" name="target" class="input" placeholder="目的達成に必要な金額">
+					<input type="text" name="target" class="input" <c:if test="${empty target}">placeholder="目的達成に必要な金額"</c:if> value="${target}">
 				</div>
 				<div class="set-box">
 					起動時遷移先
 					<div class="radio">
 						<label>
-							<input type="radio" name="trans" value="/d4/MyPageServlet" <c:if test="${loginUser.trans == '/d4/MyPageServlet'}">checked="checked"</c:if>>
+							<input type="radio" name="trans" value="/d4/MyPageServlet" <c:if test="${trans == '/d4/MyPageServlet'}">checked="checked"</c:if>>
 							マイページ
 						</label>
 						<label>
-							<input type="radio" name="trans" value="/d4/MoneyRegistServlet" <c:if test="${loginUser.trans == '/d4/MoneyRegistServlet'}">checked="checked"</c:if>>
+							<input type="radio" name="trans" value="/d4/MoneyRegistServlet" <c:if test="${trans == '/d4/MoneyRegistServlet'}">checked="checked"</c:if>>
 							収支登録
 						</label>
 						<label>
-							<input type="radio" name="trans" value="/d4/SearchServlet" <c:if test="${loginUser.trans == '/d4/SearchServlet'}">checked="checked"</c:if>>
+							<input type="radio" name="trans" value="/d4/SearchServlet" <c:if test="${trans == '/d4/SearchServlet'}">checked="checked"</c:if>>
 							検索
 						</label>
 						<label>
-							<input type="radio" name="trans" value="/d4/TableServlet" <c:if test="${loginUser.trans == '/d4/TableServlet'}">checked="checked"</c:if>>
+							<input type="radio" name="trans" value="/d4/TableServlet" <c:if test="${trans == '/d4/TableServlet'}">checked="checked"</c:if>>
 							集計表
 						</label>
 					</div>
@@ -103,6 +101,16 @@
 		</nav>
 	</footer>
 	<!-- スクリプト -->
+	<script>
+		const incomeCategoryList = [];
+		<c:forEach var="category" items="${incomeCategoryList}">
+			incomeCategoryList.push({id: "${category.id}", name: "${category.name}"});
+		</c:forEach>
+		const expenseCategoryList = [];
+		<c:forEach var="category" items="${expenseCategoryList}">
+			expenseCategoryList.push({id: "${category.id}", name: "${category.name}" });
+		</c:forEach>
+	</script>
 	<script src="js/common.js"></script>
 	<script src="js/set.js"></script>
 </body>

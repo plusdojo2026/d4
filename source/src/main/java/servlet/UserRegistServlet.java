@@ -1,7 +1,7 @@
 /* 作成日：2026/6/10
  * 作成者：深井
- * 更新者：服部
- * 更新日：2026/06/15 */
+ * 更新日：2026/06/15
+ * 更新者：服部 */
 
 package servlet;
 
@@ -26,7 +26,8 @@ public class UserRegistServlet extends HttpServlet {
 
 	// doGetメソッド
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ユーザ登録：doGet");
+		System.out.println("ユーザ登録：doGet(ユーザ登録画面表示)");
+		System.out.println("-----------------------------------");
 		request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp").forward(request, response);
 	}
 
@@ -34,7 +35,7 @@ public class UserRegistServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
 		
-			System.out.println("ユーザ登録：doPost");
+			System.out.println("ユーザ登録：doPost(ユーザ登録処理)");
 			
 			// リクエストパラメータの取得
 			request.setCharacterEncoding("UTF-8");
@@ -61,6 +62,7 @@ public class UserRegistServlet extends HttpServlet {
 				if(result && result2) {
 					System.out.println("目的とカテゴリー登録成功！");
 					request.setAttribute("success", true);
+					System.out.println("-----------------------------------");
 					request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp").forward(request, response);
 				} else {
 					System.out.println("目的とカテゴリー登録失敗、、");
@@ -69,6 +71,7 @@ public class UserRegistServlet extends HttpServlet {
 					request.setAttribute("cancelCheckPass", checkPass);
 					request.setAttribute("result", "失敗");
 					request.setAttribute("message", "このメールアドレスは既に登録されています。");
+					System.out.println("-----------------------------------");
 					request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp").forward(request, response);
 
 				}
@@ -79,11 +82,15 @@ public class UserRegistServlet extends HttpServlet {
 				request.setAttribute("cancelCheckPass", checkPass);
 				request.setAttribute("result", "失敗");
 				request.setAttribute("message", "このメールアドレスは既に登録されています。");
+				System.out.println("-----------------------------------");
 				request.getRequestDispatcher("/WEB-INF/jsp/userRegist.jsp").forward(request, response);
 			}
 		} catch (Exception e) {
 			request.setAttribute("errorMsg",e.getMessage());
 			request.setAttribute("goTo", "/d4//UserRegistServlet");
+
+			System.out.println("-----------------------------------");
+			
 			// 結果ページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
 			dispatcher.forward(request, response);

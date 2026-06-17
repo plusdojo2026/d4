@@ -1,7 +1,7 @@
 /* 作成日：2026/06/11
  * 作成者：佐藤
- * 更新者：服部
- * 更新日：2026/06/12 */
+ * 更新日：2026/06/17
+ * 更新者：服部 */
 
 package servlet;
 
@@ -25,7 +25,8 @@ public class LoginServlet extends HttpServlet {
 
 	// doGetメソッド
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("ログイン：doGet");
+		System.out.println("ログイン：doGet(ログイン画面表示)");
+		System.out.println("-----------------------------------");
 		// ログインページにフォワードする
 		RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 		dispatcher.forward(request, response);
@@ -35,7 +36,7 @@ public class LoginServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		try {
-			System.out.println("ログイン：doPost");
+			System.out.println("ログイン：doPost(ログイン処理)");
 			// リクエストパラメータを取得する
 			request.setCharacterEncoding("UTF-8");
 			String mail = request.getParameter("mail");
@@ -48,9 +49,10 @@ public class LoginServlet extends HttpServlet {
 	
 			if (user != null) { // ログイン成功
 				System.out.println("ログイン成功！");
+				System.out.println("-----------------------------------");
 				// セッションスコープにIDを格納する
 				HttpSession session = request.getSession();
-				session.setAttribute("loginUser", new User(user.getMail(), "", user.getName(), user.getTarget(), ""));
+				session.setAttribute("loginUser", new User(user.getMail(), "", user.getName(), user.getTarget(), user.getTrans()));
 	
 				// 任意のサーブレットにリダイレクトする
 				response.sendRedirect(user.getTrans());
@@ -62,6 +64,7 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("result", "失敗");
 				request.setAttribute("message", "メールアドレスまたはパスワードが違います。");
 	
+				System.out.println("-----------------------------------");
 				// ログインページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/login.jsp");
 				dispatcher.forward(request, response);
@@ -69,6 +72,9 @@ public class LoginServlet extends HttpServlet {
 		} catch (Exception e) {
 			request.setAttribute("errorMsg", e.getMessage());
 			request.setAttribute("goTo", "/d4/LoginServlet");
+			
+			System.out.println("-----------------------------------");
+			
 			// 結果ページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
 			dispatcher.forward(request, response);

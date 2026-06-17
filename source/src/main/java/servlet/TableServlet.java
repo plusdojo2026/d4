@@ -1,6 +1,6 @@
 /* 作成日：2026/06/16
  * 作成者：深井
- * 更新日：2026/06/16
+ * 更新日：2026/06/17
  * 更新者：服部 */
 
 package servlet;
@@ -32,12 +32,14 @@ public class TableServlet extends HttpServlet {
 	// doGetメソッド
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		try {
-			System.out.println("集計表：doGet");
+			System.out.println("集計表：doGet(収支情報取得して集計表画面表示)");
 			
 			// もしもログインしていなかったらログインサーブレットにリダイレクトする
 			HttpSession session = request.getSession();
 			User loginUser = (User) session.getAttribute("loginUser");
 			if (loginUser == null) {
+				System.out.println("ログインユーザが存在しません。");
+				System.out.println("-----------------------------------");
 				response.sendRedirect("/d4/LoginServlet");
 				return;
 			}
@@ -102,9 +104,12 @@ public class TableServlet extends HttpServlet {
 			System.out.println("-----------------------------------");
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/table.jsp");
 			dispatcher.forward(request, response);
-		}catch (Exception e) {
+		} catch (Exception e) {
 			request.setAttribute("errorMsg", e.getMessage());
-			request.setAttribute("goTo", "/d4/TableServlet");
+			request.setAttribute("goTo", "/d4/MyPageServlet");
+
+			System.out.println("-----------------------------------");
+			
 			// 結果ページにフォワードする
 			RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
 			dispatcher.forward(request, response);
