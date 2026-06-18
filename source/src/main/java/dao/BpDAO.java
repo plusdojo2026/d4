@@ -1,7 +1,7 @@
 /* 作成日：2026/06/10
  * 作成者：木下
- * 更新者：服部
- * 更新日：2026/06/15 */
+ * 更新者：服部、木下
+ * 更新日：2026/06/18 */
 
 package dao;
 
@@ -171,6 +171,48 @@ public class BpDAO {
 		
 	}
 	
+	// 引数mailで指定されたレコードを削除し、成功ならtrueを返す
+	public boolean delete(String mail) throws Exception {
+		System.out.println("DAO: 収支削除開始");
+		Connection con = null;
+		PreparedStatement pStmt = null;
+				
+		// 削除結果を格納する
+		boolean result = false;
+				
+		try {
+			con = getConnection();
+					
+			// DELETE文を準備する
+			String sql = "DELETE FROM Bp WHERE mail=?";
+			pStmt = con.prepareStatement(sql);
+					
+			// ？の部分に値を入れる処理
+			pStmt.setString(1, mail);
+					
+			// SQL文を実行する
+			if (pStmt.executeUpdate() >= 0) {
+				System.out.println("収支削除完了");
+				result = true;
+			}
+					
+		// 例外処理	
+		} catch (SQLException e){
+					
+			throw new Exception("収支削除に失敗しました！\n管理者に連絡してください。");
+				
+		// 最終的に必ず行う処理
+		} finally {
+					
+			closeAll(con, null, pStmt);
+					
+		}
+				
+		// 結果を返す
+		return result;
+			
+	}
+	
 	// 引数mail,kindが一致するものを検索して、取得されたデータのリストを返す(マイページ用)
 	public List<Bp> mailSelect(String mail, int kind) throws Exception {
 		System.out.println("DAO: 収支一覧取得開始");
@@ -232,10 +274,19 @@ public class BpDAO {
 		
 		try {
 			con = getConnection();
+			String order;
+			
+			if (sort == 1) {
+				order = "DESC";
+			} else if(sort == 2) {
+				order = "ASC";
+			} else {
+				order = "DESC";
+			}
 			
 			// SELECT文を準備する
 			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id "
-					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?) ORDER BY b.day ?";
+					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?) ORDER BY b.day " + order;
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる処理
@@ -260,26 +311,21 @@ public class BpDAO {
 			} else {
 				pStmt.setString(5, "%");
 			}
-			if (sort == 1) {
-				pStmt.setString(6, "DESC");
-			} else if(sort == 2) {
-				pStmt.setString(6, "ASC");
-			} else {
-				pStmt.setString(6, "DESC");
-			}
 			
 			// SELECT文を実行し、結果表を取得する
 			rs = pStmt.executeQuery();
 			
 			// 結果表をコレクションにコピーする
 			while (rs.next()) {
-				String date = rs.getString("b.year") + "/" + rs.getString("b.month") + "/" + rs.getString("b.day");
+				String date = rs.getString("year") + "/" + rs.getString("month") + "/" + rs.getString("day");
 				
-				Bp bp = new Bp(rs.getInt("b.id"), rs.getString("b.mail"), rs.getInt("b.cid"), 
-						rs.getInt("b.money"), rs.getString("b.memo"), rs.getString("b.year"), rs.getString("b.month"), 
-						rs.getString("b.day"));
-				String cname = rs.getString("c.cname");
-				int kind = rs.getInt("c.kind");
+				Bp bp = new Bp(rs.getInt("id"), rs.getString("mail"), rs.getInt("cid"), 
+						rs.getInt("money"), rs.getString("memo"), rs.getString("year"), rs.getString("month"), 
+						rs.getString("day"));
+				
+				String cname = rs.getString("name");
+				
+				int kind = rs.getInt("kind");
 				
 				// 新しい日付の場合の処理
 				if(!map.containsKey(date)) {

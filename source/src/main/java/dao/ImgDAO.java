@@ -1,7 +1,7 @@
 /* 作成日：2026/06/12
  * 作成者：深井
- * 更新者：
- * 更新日： */
+ * 更新者：服部
+ * 更新日：2026/06/18 */
 
 package dao;
 
@@ -150,7 +150,7 @@ public class ImgDAO {
 			pStmt.setInt(1, id);
 
 			// 削除できたかを確認する
-			if(pStmt.executeUpdate() >= 1) {
+			if(pStmt.executeUpdate() >= 01) {
 				System.out.println("削除成功");
 				return true;
 			}
@@ -164,6 +164,38 @@ public class ImgDAO {
 		return false;
 	}
 
+	// 画像を削除
+	public boolean delete(String mail) throws Exception{
+		System.out.println("DAO: 削除処理");
+
+		Connection con = null;
+		PreparedStatement pStmt = null;
+
+		try {
+			con = getConnection();
+			
+			// DELETE文を準備する
+			String sql = "DELETE FROM Img WHERE mail = ?";
+			pStmt = con.prepareStatement(sql);
+			
+			// ？の部分に値を入れる
+			pStmt.setString(1, mail);
+
+			// 削除できたかを確認する
+			if(pStmt.executeUpdate() >= 1) {
+				System.out.println("削除成功");
+				return true;
+			}
+
+		} catch (SQLException e) {
+			throw new Exception("画像削除に失敗しました！<br>管理者に連絡してください。");
+		} finally {
+			closeAll(con, null, pStmt);
+		}
+		
+		return false;
+	}
+	
 	// 接続を行うメソッド
 	private Connection getConnection() throws Exception {
 

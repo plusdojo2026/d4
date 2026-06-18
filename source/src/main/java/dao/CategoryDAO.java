@@ -1,7 +1,7 @@
 /* 作成日：2026/06/12
  * 作成者：深井
  * 更新者：服部
- * 更新日：2026/06/15 */
+ * 更新日：2026/06/18 */
 
 package dao;
 
@@ -61,28 +61,40 @@ public class CategoryDAO {
 		return false;
 	}
 
-//	//削除
-//	public void delete(int id) {
-//		System.out.println("DAO: 削除");
-//
-//		Connection con = null;
-//		PreparedStatement pStmt = null;
-//
-//		try {
-//			con = getConnection();
-//
-//			String sql = "DELETE FROM category WHERE id = ?";
-//			pStmt = con.prepareStatement(sql);
-//			pStmt.setInt(1, id);
-//
-//			pStmt.executeUpdate();
-//
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		} finally {
-//			closeAll(con, null, pStmt);
-//		}
-//	}
+	//削除
+	public boolean delete(String mail) throws Exception {
+		System.out.println("DAO: 削除処理開始");
+
+		Connection con = null;
+		PreparedStatement pStmt = null;
+
+		try {
+			con = getConnection();
+
+			// SELECT文を準備する
+			String sql = "DELETE FROM category WHERE mail = ?";
+			pStmt = con.prepareStatement(sql);
+			
+			// ？の部分に値を入れる
+			pStmt.setString(1, mail);
+
+			// 追加できたかを確認する
+			if(pStmt.executeUpdate() >= 1) {
+				System.out.println("編集成功");
+				return true;
+			}
+
+		// 例外処理
+		} catch (SQLException e) {
+			
+			throw new Exception("カテゴリ削除失敗しました！<br>管理者に連絡してください。");
+			
+		// 最終的に必ず行う処理
+		} finally {
+			closeAll(con, null, pStmt);
+		}
+		return false;
+	}
 	
 	// 編集
 	public boolean update(Category category) throws Exception {

@@ -56,6 +56,38 @@ public class PurposeDAO {
 		}
 		return false;
 	}
+	
+	// 目的を削除
+	public boolean delete(String mail) throws Exception{
+		System.out.println("DAO: 削除処理");
+
+		Connection con = null;
+		PreparedStatement pStmt = null;
+
+		try {
+			con = getConnection();
+			
+			// DELETE文を準備する
+			String sql = "DELETE FROM Purpose WHERE mail = ?";
+			pStmt = con.prepareStatement(sql);
+			
+			// ？の部分に値を入れる
+			pStmt.setString(1, mail);
+
+			// 削除できたかを確認する
+			if(pStmt.executeUpdate() >= 1) {
+				System.out.println("削除成功");
+				return true;
+			}
+
+		} catch (SQLException e) {
+			throw new Exception("目的削除に失敗しました！<br>管理者に連絡してください。");
+		} finally {
+			closeAll(con, null, pStmt);
+		}
+		
+		return false;
+	}
 
 	// 目的を編集して、成功ならtrueを返す
 	public boolean update(Purpose purpose) throws Exception {

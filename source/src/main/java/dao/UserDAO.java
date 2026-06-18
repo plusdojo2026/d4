@@ -1,6 +1,6 @@
 /* 作成日：2026/6/10
  * 作成者：深井
- * 更新日：2026/6/15
+ * 更新日：2026/6/18
  * 更新者：服部, 深井 */
 
 package dao;
@@ -55,11 +55,11 @@ public class UserDAO {
 				user = null;
 			}
 
-			// 例外処理
+		// 例外処理
 		} catch (SQLException e) {
 			throw new Exception("ログイン失敗しました！<br>管理者に連絡してください。");
 
-			// 最終的に必ず行う処理
+		// 最終的に必ず行う処理
 		} finally {
 			closeAll(con, rs, pStmt);
 		}
@@ -69,7 +69,7 @@ public class UserDAO {
 	}
 
 	// 引数で指定されたUserで更新成功ならuser情報を返す
-	public User update(User user) throws Exception {
+	public boolean update(User user) throws Exception {
 		System.out.println("DAO: 更新開始");
 		Connection con = null;
 		ResultSet rs = null;
@@ -78,7 +78,7 @@ public class UserDAO {
 		try {
 			con = getConnection();
 
-			// 1つ目のSELECT文を準備する
+			// UPDATE文を準備する
 			String sql = "UPDATE User SET name=?, target=?, trans=? WHERE mail=?";
 			pStmt = con.prepareStatement(sql);
 
@@ -89,39 +89,21 @@ public class UserDAO {
 			pStmt.setString(4, user.getMail());
 
 			// UPDATE文を実行してpStmtのclose処理
-			pStmt.executeUpdate();
-			closeAll(null, rs, pStmt);
-			System.out.println("更新完了");
-
-			// SELECT文を準備する
-			sql = "SELECT * FROM User WHERE `mail`=?";
-			pStmt = con.prepareStatement(sql);
-
-			// ？の部分に値を入れる処理
-			pStmt.setString(1, user.getMail());
-
-			// SELECT文を実行し、結果表を取得する
-			rs = pStmt.executeQuery();
-
-			// ユーザの値をsetする
-			if (rs.next()) {
-				System.out.println("ユーザ情報再取得");
-				user.setName(rs.getString("name"));
-				user.setTarget(rs.getInt("target"));
-				user.setTrans(rs.getString("trans"));
-			} else {
-				System.out.println("ユーザ情報なし");
-				user = null;
+			if(pStmt.executeUpdate() >= 1) {
+				System.out.println("更新完了");
+				return true;
 			}
-
+			
+		// 例外処理
 		} catch (SQLException e) {
 			throw new Exception("情報更新に失敗しました！<br>管理者に連絡してください。");
 
+		// 最終的に必ず行う処理
 		} finally {
 			closeAll(con, rs, pStmt);
 		}
 
-		return user;
+		return false;
 	}
 
 	// 引数で指定されたUserで新規登録成功ならtrueを返す
@@ -144,13 +126,16 @@ public class UserDAO {
 				System.out.println("ユーザ登録完了");
 				result = true;
 			}
-
+			
+		// 例外処理
 		} catch (SQLException e) {
 			if (e.getErrorCode() == 1062) {
 				System.out.println("登録済みユーザのため登録未完了");
 				return false;
 			}
 			throw new Exception("ユーザー登録に失敗しました！<br>管理者に連絡してください。");
+			
+		// 最終的に必ず行う処理
 		} finally {
 			closeAll(con, null, pStmt);
 		}
@@ -181,14 +166,64 @@ public class UserDAO {
 				System.out.println("削除成功");
 				result = true;
 			}
-
+			
+		// 例外処理
 		} catch (SQLException e) {
 			throw new Exception("アカウント削除に失敗しました！<br>管理者に連絡してください。");
+			
+		// 最終的に必ず行う処理
 		} finally {
 			closeAll(con, null, pStmt);
 		}
 
 		return result;
+	}
+	
+	// ユーザー情報取得
+	public User select(String mail) throws Exception {
+		System.out.println("DAO: ユーザー取得開始");
+		
+		Connection con = null;
+		ResultSet rs = null;
+		PreparedStatement pStmt = null;
+
+		User user = new User("", "", "", 0 , "");
+		
+		try {
+			con = getConnection();
+
+			// SELECT文を準備する
+			String sql = "SELECT * FROM User WHERE `mail`=?";
+			pStmt = con.prepareStatement(sql);
+
+			// ？の部分に値を入れる処理
+			pStmt.setString(1, mail);
+
+			// SELECT文を実行し、結果表を取得する
+			rs = pStmt.executeQuery();
+
+			// ユーザの値をsetする
+			if (rs.next()) {
+				System.out.println("ユーザ情報再取得");
+				user.setMail("mail");
+				user.setName(rs.getString("name"));
+				user.setTarget(rs.getInt("target"));
+				user.setTrans(rs.getString("trans"));
+			} else {
+				System.out.println("ユーザ情報なし");
+				user = null;
+			}
+			
+		// 例外処理
+		} catch (SQLException e) {
+			throw new Exception("情報更新に失敗しました！<br>管理者に連絡してください。");
+		
+		// 最終的に必ず行う処理
+		} finally {
+			closeAll(con, rs, pStmt);
+		}
+
+		return user;
 	}
 
 	// 接続を行うメソッド
