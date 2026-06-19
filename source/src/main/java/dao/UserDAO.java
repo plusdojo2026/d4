@@ -205,7 +205,7 @@ public class UserDAO {
 			// ユーザの値をsetする
 			if (rs.next()) {
 				System.out.println("ユーザ情報再取得");
-				user.setMail("mail");
+				user.setMail(rs.getString("mail"));
 				user.setName(rs.getString("name"));
 				user.setTarget(rs.getInt("target"));
 				user.setTrans(rs.getString("trans"));

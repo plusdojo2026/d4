@@ -29,39 +29,38 @@
 			<div class="category-setting">
 				<div class="category-title">
 					カテゴリ設定
-					<button class="income-btn">収入</button>
-					<button class="expense-btn">支出</button>
+					<button type="button" class="income-btn" onclick="changeCategory('income')">収入</button>
+					<button type="button" class="expense-btn" onclick="changeCategory('expense')">支出</button>
 				</div>
-				<div class="category">
-					<c:forEach var="category" items="${incomeCategoryList}">
-						<div class="category-input">
-							<input type="text" value="${category.name}">
-							<img src="img/dust-box.png">
-							<input type="hidden" name="cid" value="${category.id}">
+				<div class="category-box">
+					<c:forEach var="i" begin="1" end="10">
+						<c:set var="category" value="${incomeCategoryList[i-1]}"/>
+						<div id="number${i}" class="category-input">
+							<input type="text" id="name${i}" oninput="onInput(${i})" name="cname" placeholder="${i}つ目" value="${category.name}" oninput="onInput(${i})">
 						</div>
 					</c:forEach>
-					<button onclick="" class="add">追加</button>
 				</div>
 			</div>
 			
 			<div class="user-setting">
 				<div class="set-box">
-					ニックネーム
+					ニックネーム<br>
 					<input type="text" name="name" class="input" placeholder="ホーム画面で表示されます" value="${name}">
 				</div>
 				<div class="set-box">
-					目的
-					<c:forEach var="purpose" items="${purposeList}">
-						<input type="text" name="text" class="input" value="${purpose.text}">
+					目的<br>
+					<c:forEach var="i" begin="1" end="3">
+						<c:set var="purpose" value="${purposeList[i-1]}"/>
+						<input type="text" name="text" class="input" placeholder="${i}つ目" value="${purpose.text}"><br>
 						<input type="hidden" name="id" value="${purpose.id}">
 					</c:forEach>
 				</div>
 				<div class="set-box">
-					目標金額
-					<input type="text" name="target" class="input" <c:if test="${empty target}">placeholder="目的達成に必要な金額"</c:if> value="${target}">
+					目標金額<br>
+					<input type="text" name="target" class="input" placeholder="目的達成に必要な金額" value="${target}">
 				</div>
 				<div class="set-box">
-					起動時遷移先
+					起動時遷移先<br>
 					<div class="radio">
 						<label>
 							<input type="radio" name="trans" value="/d4/MyPageServlet" <c:if test="${trans == '/d4/MyPageServlet'}">checked="checked"</c:if>>
@@ -84,7 +83,7 @@
 			</div>
 		</form>
 		<div class="delete-user">
-			<form method="POST" action="/d4/MyPageServlet" id="delete">
+			<form method="POST" action="/d4/SetServlet" id="delete-form">
 				<button type="submit" name="submit" value="削除">アカウント削除</button>
 			</form>
 		</div>
@@ -102,16 +101,33 @@
 	</footer>
 	<!-- スクリプト -->
 	<script>
-		const incomeCategoryList = [];
+		const INCOME_CATEGORY_LIST = [];
 		<c:forEach var="category" items="${incomeCategoryList}">
-			incomeCategoryList.push({id: "${category.id}", name: "${category.name}"});
+			INCOME_CATEGORY_LIST.push({id: ${category.id}, name: "${category.name}", number: ${category.number}});
 		</c:forEach>
-		const expenseCategoryList = [];
+		const EXPENSE_CATEGORY_LIST = [];
 		<c:forEach var="category" items="${expenseCategoryList}">
-			expenseCategoryList.push({id: "${category.id}", name: "${category.name}" });
+			EXPENSE_CATEGORY_LIST.push({id: ${category.id}, name: "${category.name}", number: ${category.number}});
 		</c:forEach>
 	</script>
 	<script src="js/common.js"></script>
 	<script src="js/set.js"></script>
+	<c:if test="${result}">
+		<script>
+			alert("更新成功！\nマイページ画面に遷移します。");
+			window.location.href = "/d4/MyPageServlet";
+		</script>
+	</c:if>
+	<c:if test="${result == false}">
+		<script>
+			alert("更新失敗。\nもう一度やり直してください。");
+		</script>
+	</c:if>
+	<c:if test="${success == true}">
+		<script>
+			alert("アカウント削除成功！\nログイン画面に遷移します。");
+			window.location.href = "/d4/LoginServlet";
+		</script>
+	</c:if>
 </body>
 </html>

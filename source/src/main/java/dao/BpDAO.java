@@ -286,7 +286,7 @@ public class BpDAO {
 			
 			// SELECT文を準備する
 			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id "
-					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month=?) ORDER BY b.day " + order;
+					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month LIKE ?) ORDER BY b.day " + order;
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる処理
@@ -340,7 +340,11 @@ public class BpDAO {
 				
 				SearchResult sr = map.get(date);
 				sr.getBpView().add(new BpView(bp, cname, kind));
-				sr.setSum(sr.getSum() + bp.getMoney());
+				if(kind == 1) {
+					sr.setSum(sr.getSum() + bp.getMoney());
+				} else {
+					sr.setSum(sr.getSum() - bp.getMoney());
+				}
 				
 			}
 			srList = new ArrayList<SearchResult>(map.values());

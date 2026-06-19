@@ -1,8 +1,8 @@
 <!-- 
- 作成日：
- 作成者：
- 更新者：
- 更新日： 
+ 作成日：2026/06/16
+ 作成者：服部
+ 更新者：木下
+ 更新日：2026/06/19
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -25,14 +25,14 @@
 			<label class="year-box">
 				<select name="year" form="search-form">
 					<c:forEach var="year" items="${yearList}">
-						<option value="${year}"><c:out value="${year}"></c:out></option>
+						<option value="${year}"<c:if test="${year == selectedYear}">selected</c:if>><c:out value="${year}"></c:out></option>
 					</c:forEach>
 				</select>
 			</label>
 			<label class="month-box">
 				<select name="month" form="search-form">
 					<c:forEach var="month" items="${monthList}">
-						<option value="${month}"><c:out value="${month}"></c:out></option>
+						<option value="${month}"<c:if test="${month == selectedMonth}">selected</c:if>><c:out value="${month}"></c:out></option>
 					</c:forEach>
 				</select>
 			</label>
@@ -44,9 +44,9 @@
 		<form method="POST" action="/d4/SearchServlet" id="search-form">
 			<!-- 検索バー -->
 			<div class="input-box">
-				<input type="text" name="keyword" class="input" placeholder="キーワードを入力してください">
+				<input type="text" name="keyword" class="input" placeholder="キーワードを入力してください" value="${enteredKeyword}">
 				<button type="submit" name="search">
-					<img src="img/search-btn" class="search-btn">
+					<img src="img/search-btn.png" class="search-btn">
 				</button>
 			</div>
 			<!-- 並び替え -->
@@ -54,8 +54,8 @@
 				<label>
 					日付
 					<select name="sort">
-						<option value="DESC">降順</option>
-						<option value="ASC">昇順</option>
+						<option value="DESC"<c:if test="${selectedSort == 'DESC'}">selected</c:if>>降順</option>
+						<option value="ASC"<c:if test="${selectedSort == 'ASC'}">selected</c:if>>昇順</option>
 					</select>
 				</label>
 			</div>
@@ -65,15 +65,15 @@
 		<div class="sum-box">
 			<div class="sum">
 				収入<br>
-				<p class="income"><c:out value="${monthIncome}"></c:out></p>
+				<p class="income"><c:out value="${incomeSum}"></c:out></p>
 			</div>
 			<div class="sum">
 				支出<br>
-				<p class="expense"><c:out value="${monthExpense}"></c:out></p>
+				<p class="expense"><c:out value="${expenseSum}"></c:out></p>
 			</div>
 			<div class="sum">
 				貯蓄<br>
-				<c:out value="${yearIncome - monthExpense}"></c:out>
+				<c:out value="${incomeSum - expenseSum}"></c:out>
 			</div>
 		</div>
 		
@@ -109,7 +109,7 @@
 							<!-- 隠しメニュー -->
 							<div class="menu">
 								<form method="GET" action="/d4/MoneyUpdateServlet">
-									<input type="submit" type="submit" value="編集">
+									<input type="submit" name="submit" value="編集">
 									<input type="hidden" name="id" value="${bpView.bp.id}">
 									<input type="hidden" name="cid" value="${bpView.bp.cid}">
 									<input type="hidden" name="money" value="${bpView.bp.money}">
@@ -119,12 +119,16 @@
 									<input type="hidden" name="day" value="${bpView.bp.day}">
 									<input type="hidden" name="date" value="${search.date}">
 								</form>
-								<form method="POST" action="/d4/SearchServlet">
-									<input type="submit" type="submit" value="削除">
+								<form method="POST" id="bp-delete" action="/d4/SearchServlet">
+									<input type="submit" name="submit" value="削除">
 									<input type="hidden" name="id" value="${bpView.bp.id}">
 								</form>
 							</div>
 						</c:forEach>
+						<input type="hidden" form="bp-delete" name="year" value="${selectedYear}">
+						<input type="hidden" form="bp-delete" name="month" value="${selectedMonth}">
+						<input type="hidden" form="bp-delete" name="keyword" value="${keyWord}">
+						<input type="hidden" form="bp-delete" name="sort" value="${selectedSort}">
 					</div>
 				</div>
 			</c:forEach>

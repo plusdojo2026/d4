@@ -59,6 +59,8 @@ public class MoneyUpdateServlet extends HttpServlet {
 			String day = request.getParameter("day");
 			String memo = request.getParameter("memo");
 			
+			date = date.replaceAll("/", "-");
+			
 			// カテゴリー取得
 			CategoryDAO dao = new CategoryDAO();
 			List<Category> incomeCategoryList = dao.selectList(loginUser.getMail(), 1);
@@ -111,6 +113,7 @@ public class MoneyUpdateServlet extends HttpServlet {
 	
 			// リクエストパラメータを取得する
 			request.setCharacterEncoding("UTF-8");
+			int id = Integer.parseInt(request.getParameter("id"));
 			int cid = Integer.parseInt(request.getParameter("cid"));
 			int money = Integer.parseInt(request.getParameter("money"));
 			String date = request.getParameter("date");
@@ -125,19 +128,20 @@ public class MoneyUpdateServlet extends HttpServlet {
 	
 			// 登録処理を行う
 			BpDAO bpDao = new BpDAO();
-			Bp bp = new Bp(0, mail, cid, money, memo, year, month, day);
+			Bp bp = new Bp(id, mail, cid, money, memo, year, month, day);
 
 			boolean result = bpDao.update(bp);
 			if (result) {
 				System.out.println("収支編集成功！");
 				request.setAttribute("success", "true");
 				System.out.println("-----------------------------------");
-				response.sendRedirect("/d4/MoneyUpdateServlet");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/moneyUpdate.jsp");
+				dispatcher.forward(request, response);
 			} else {
 				System.out.println("収支編集失敗、、");
 				System.out.println("-----------------------------------");
 				request.setAttribute("errorMsg", "収支編集に失敗しました！<br>管理者に連絡してください。");
-				request.setAttribute("goTo", "/d4/MoneyUpdateServlet");
+				request.setAttribute("goTo", "/d4/SearchServlet");
 				// 結果ページにフォワードする
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
 				dispatcher.forward(request, response);
@@ -146,7 +150,7 @@ public class MoneyUpdateServlet extends HttpServlet {
 		} catch (Exception e) {
 
 			request.setAttribute("errorMsg", e.getMessage());
-			request.setAttribute("goTo", "/d4/MoneyUpdateServlet");
+			request.setAttribute("goTo", "/d4/SearchServlet");
 
 			System.out.println("-----------------------------------");
 			

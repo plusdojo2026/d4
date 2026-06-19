@@ -1,6 +1,24 @@
-/* 作成日：
- * 作成者：
+/* 作成日：2026/06/18
+ * 作成者：佐藤
  * 更新者：
  * 更新日： */
 
 @charset "UTF-8";
+
+/*メイン*/
+.error {
+    text-align: center;
+    color: rgb(62, 62, 62);
+}
+.error img {
+    width: 80px;
+    margin: 40px auto 20px auto;
+}
+.message {
+	text-align: center;
+	margin: 30px auto 0 auto;
+}
+.trans {
+    text-align: center;
+    margin-top: 12%;
+}

@@ -18,8 +18,8 @@ if(isIncomeCategory(SELECTED_ID)) {
 }
 
 let form = document.getElementById("update-form");
-let moneyErrorMsg = document.getElementById('regist-money-msg');
-let memoErrorMsg = document.getElementById('regist-memo-msg');
+let moneyErrorMsg = document.getElementById('update-money-msg');
+let memoErrorMsg = document.getElementById('update-memo-msg');
 const MONEY_INPUT = document.querySelector('.money');
 const MEMO_INPUT = document.querySelector('.memo');
 

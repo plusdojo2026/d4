@@ -72,7 +72,7 @@ public class CategoryDAO {
 			con = getConnection();
 
 			// SELECT文を準備する
-			String sql = "DELETE FROM category WHERE mail = ?";
+			String sql = "DELETE FROM Category WHERE mail = ?";
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる
