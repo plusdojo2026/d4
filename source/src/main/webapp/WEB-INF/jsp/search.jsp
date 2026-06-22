@@ -6,6 +6,7 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -17,11 +18,11 @@
 </head>
 <body>
 	<!-- ヘッダー -->
-	<header>
+	<header class="header">
 		<div>
 			<h1><img src="img/logo.png" alt="ぽちため"></h1>
 		</div>
-		<div>
+		<div class="year-month-boxs">
 			<label class="year-box">
 				<select name="year" form="search-form">
 					<c:forEach var="year" items="${yearList}">
@@ -48,90 +49,97 @@
 				<button type="submit" name="search">
 					<img src="img/search-btn.png" class="search-btn">
 				</button>
-			</div>
-			<!-- 並び替え -->
-			<div class="sort">
-				<label>
-					日付
-					<select name="sort">
-						<option value="DESC"<c:if test="${selectedSort == 'DESC'}">selected</c:if>>降順</option>
-						<option value="ASC"<c:if test="${selectedSort == 'ASC'}">selected</c:if>>昇順</option>
-					</select>
-				</label>
+			
+				<!-- 並び替え -->
+				<div class="sort">
+					<label>
+						日付
+						<select name="sort">
+							<option value="DESC"<c:if test="${selectedSort == 'DESC'}">selected</c:if>>降順</option>
+							<option value="ASC"<c:if test="${selectedSort == 'ASC'}">selected</c:if>>昇順</option>
+						</select>
+					</label>
+				</div>
 			</div>
 		</form>
 		
 		<!-- 収支と貯蓄合計 -->
 		<div class="sum-box">
 			<div class="sum">
-				収入<br>
-				<p class="income"><c:out value="${incomeSum}"></c:out></p>
+				収入
+				<p class="income"><fmt:formatNumber value="${incomeSum}" type="number"/></p>
 			</div>
 			<div class="sum">
-				支出<br>
-				<p class="expense"><c:out value="${expenseSum}"></c:out></p>
+				支出
+				<p class="expense"><fmt:formatNumber value="${expenseSum}" type="number"/></p>
 			</div>
 			<div class="sum">
 				貯蓄<br>
-				<c:out value="${incomeSum - expenseSum}"></c:out>
+				<fmt:formatNumber value="${incomeSum - expenseSum}" type="number"/>
 			</div>
 		</div>
 		
 		<!-- 収支表示 -->
-		<div class="">
-			<c:forEach var="search" items="${searchList}">
-				<div class="date-block">
+		<div class="search-table">
+			<c:forEach var="search" items="${searchList}" varStatus="status">
+				<div class="date-block" <c:if test="${status.index >= 50}">style="display:none;"</c:if>>
 				
 					<!-- 日付ヘッダ -->
 					<div class="date-header" onclick="toggleDetail(this)">
-						<span><c:out value="${search.date}"></c:out></span>
-						<span><c:out value="${search.sum}">円</c:out></span>
+						<div class="date-header-left">
+							<span><c:out value="${search.date}"></c:out></span>
+							<span><fmt:formatNumber value="${search.sum}" type="number"/></span>
+						</div>
 						<img src="img/down-list.png" class="arrow">
 					</div>
 					
 					<!-- 明細 -->
-					<div class="date-detail">
 						<c:forEach var="bpView" items="${search.bpView}">
-							<div class="bp">
-								<span><c:out value="${bpView.cname}"></c:out></span>
-								<c:if test="${bpView.kind == 1}">
-									<span style="color: #00b9ef;"><c:out value="${bpView.bp.money}"></c:out></span>
-								</c:if>
-								<c:if test="${bpView.kind == 2}">
-									<span style="color: #ef0000;"><c:out value="${bpView.bp.money}"></c:out></span>
-								</c:if>
-								<span><c:out value="${bpView.bp.memo}"></c:out></span>
-							</div>
-							
-							<!-- 隠しメニュー表示用ボタン -->
-							<button class="menu-btn" onclick="toggleMenu(this)">︙</button>
-							
-							<!-- 隠しメニュー -->
-							<div class="menu">
-								<form method="GET" action="/d4/MoneyUpdateServlet">
-									<input type="submit" name="submit" value="編集">
-									<input type="hidden" name="id" value="${bpView.bp.id}">
-									<input type="hidden" name="cid" value="${bpView.bp.cid}">
-									<input type="hidden" name="money" value="${bpView.bp.money}">
-									<input type="hidden" name="memo" value="${bpView.bp.memo}">
-									<input type="hidden" name="year" value="${bpView.bp.year}">
-									<input type="hidden" name="month" value="${bpView.bp.month}">
-									<input type="hidden" name="day" value="${bpView.bp.day}">
-									<input type="hidden" name="date" value="${search.date}">
-								</form>
-								<form method="POST" id="bp-delete" action="/d4/SearchServlet">
-									<input type="submit" name="submit" value="削除">
-									<input type="hidden" name="id" value="${bpView.bp.id}">
-								</form>
+							<div class="date-detail">
+								<div class="bp">
+									<span><c:out value="${bpView.cname}"></c:out></span>
+									<div class="bp-right">
+										<c:if test="${bpView.kind == 1}">
+											<span class="money" style="color: #00b9ef;"><fmt:formatNumber value="${bpView.bp.money}" type="number"/></span>
+										</c:if>
+										<c:if test="${bpView.kind == 2}">
+											<span class="money" style="color: #ef0000;"><fmt:formatNumber value="${bpView.bp.money}" type="number"/></span>
+										</c:if>
+									</div>
+									<span class="memo"><c:out value="${bpView.bp.memo}"></c:out></span>
+									<!-- 隠しメニュー表示用ボタン -->
+									<button class="menu-btn" onclick="toggleMenu(this)">︙</button>
+								</div>
+								
+								<!-- 隠しメニュー -->
+								<div class="menu">
+									<form method="GET" action="/d4/MoneyUpdateServlet">
+										<input type="submit" name="submit" id="update" class="btn" value="編集">
+										<input type="hidden" name="id" value="${bpView.bp.id}">
+										<input type="hidden" name="cid" value="${bpView.bp.cid}">
+										<input type="hidden" name="money" value="${bpView.bp.money}">
+										<input type="hidden" name="memo" value="${bpView.bp.memo}">
+										<input type="hidden" name="year" value="${bpView.bp.year}">
+										<input type="hidden" name="month" value="${bpView.bp.month}">
+										<input type="hidden" name="day" value="${bpView.bp.day}">
+										<input type="hidden" name="date" value="${search.date}">
+									</form>
+									<form method="POST" class="bp-delete" action="/d4/SearchServlet">
+										<input type="submit" name="submit" id="delete" class="btn" value="削除">
+										<input type="hidden" name="id" value="${bpView.bp.id}">
+										<input type="hidden" name="year" value="${selectedYear}">
+										<input type="hidden" name="month" value="${selectedMonth}">
+										<input type="hidden" name="keyword" value="${keyWord}">
+										<input type="hidden" name="sort" value="${selectedSort}">
+									</form>
+								</div>
 							</div>
 						</c:forEach>
-						<input type="hidden" form="bp-delete" name="year" value="${selectedYear}">
-						<input type="hidden" form="bp-delete" name="month" value="${selectedMonth}">
-						<input type="hidden" form="bp-delete" name="keyword" value="${keyWord}">
-						<input type="hidden" form="bp-delete" name="sort" value="${selectedSort}">
 					</div>
-				</div>
 			</c:forEach>
+			<c:if test="${searchList.size() > 50}">
+				<button id="more">↓↓↓</button>
+			</c:if>
 		</div>
 	</main>
 	<!-- フッター -->

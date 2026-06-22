@@ -1,7 +1,7 @@
 /* 作成日：2026/06/12
  * 作成者：佐藤
- * 更新者：
- * 更新日： */
+ * 更新者：服部
+ * 更新日：2026/06/22 */
 
 @charset "UTF-8";
 
@@ -9,6 +9,10 @@
 .header {
 	display: flex;
 	align-items: center;
+	background-color: #ffffff;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
 }
 
 form[id='logout-form'] {
@@ -34,6 +38,7 @@ form[id='logout-form'] {
 	gap: 8px;
 	font-size: 25px;
 }
+
 .purpose-title img, .img-title img {
 	width: 40px;
 	margin: 0;
@@ -58,6 +63,7 @@ form[id='logout-form'] {
 	font-size: 20px;
 	font-weight: 400;
 }
+
 .purpose ul {
 	margin: 0;
 	padding-left: 20px;
@@ -95,29 +101,59 @@ td {
 
 /* 画像設定コンテンツ(後からできたらやる部分) */
 .img-title {
-	padding-top: 40px;
 	display: flex;
-	justify-content: center;
 	align-items: center;
+	margin: 50px 0 15px 10px;
 	gap: 8px;
 	font-size: 20px;
 	color: rgb(55, 55, 55);
 }
-
-.upload-area {
+.img-input {
+	margin: 20px 0 0 20px;
 	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	gap: 10px;
-	margin-top: 30px;
-	color: rgb(55, 55, 55);
+	align-items: center;
+	gap: 5%;
 }
 
-#input-img-form {
+.up-load {
+	font-size: 10px;
+	width: auto;
+	padding: 3px 12px 3px 12px;
+	border-radius: 30px;
+	color: black;
+	background-color: #f0f8ff;
+	border: 1.5px solid #00a1e9;
+	text-align: center;
+}
+.img-item {
 	display: flex;
-	justify-content: center;
+	margin: 5% 0 0 10%;
+	align-items: center;
+	gap: 30px;
+	margin-bottom: 15px;
+}
+
+.img {
+	max-width: 70%;
+	width: auto;
+	height: auto;
+}
+
+.img-item button {
+	border: none;
+	background: none;
+	padding: 0;
 }
 
 .dust-box {
 	width: 25px;
+}
+
+.mypage-message-area {
+	width: 100%;
+	margin: 0 auto 40px 22px;
+}
+.error {
+	font-size: 15px;
+	color: #FF0000;
 }

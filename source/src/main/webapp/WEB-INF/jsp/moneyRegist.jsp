@@ -1,7 +1,7 @@
 <!-- 
  作成日：2026/06/10
  作成者：木下、佐藤
- 更新日：2026/06/17
+ 更新日：2026/06/22
  更新者：服部
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -36,7 +36,7 @@
 				<button class="income-btn">収入</button>
 			</div>
 			<div class="button">
-				<button class="expense-btn">支出</button><br>
+				<button class="expense-btn active">支出</button><br>
 			</div>
 		</div>
 		
@@ -44,34 +44,36 @@
 		<form method="POST" action="/d4/MoneyRegistServlet" id="regist-form">
 			<div class="content">
 			
-				<div class="money-input">
+				<div class="input-box">
 					日付
 					<div class="input">
 						<input type="date" name="date" class="date" value="${today}"><br>
 					</div>
 				</div>
 				
-				<div class="money-input">
+				<div class="input-box">
 					金額
-					<div class="input">
-						<input type="text" name="money" class="money"><br>
+					<div class="input inp-and-msg">
+						<input type="text" name="money" class="money">
+						<span class="message" id="regist-money-msg"></span>
 					</div>
-					<span class="message" id="regist-money-msg"></span><br>
 				</div>
 				
-				<div class="money-input">
+				<div class="input-box">
 					カテゴリ
 					<div class="cat-input">
 						<select class="select-box"></select><br>
 					</div>
 				</div>
 				
-				<div class="money-input">
+				<div class="input-box">
 					<div class="memo-box">
 						メモ<br>
-						<textarea name="memo" class="memo"></textarea><br>
+						<div class="inp-and-msg">
+							<textarea name="memo" class="memo"></textarea>
+							<span class="message" id="regist-memo-msg"></span>
+						</div>
 					</div>
-					<span class="message" id="regist-memo-msg"></span><br>
 				</div>
 				
 			</div>

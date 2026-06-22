@@ -65,7 +65,7 @@ public class SearchServlet extends HttpServlet {
 			String nYear = parts[0];
 			String nMonth = parts[1];
 			
-			request.setAttribute("selectedYear", nYear);
+			request.setAttribute("selectedYear", String.valueOf(Integer.parseInt(nYear)));
 			request.setAttribute("selectedMonth", String.valueOf(Integer.parseInt(nMonth)));
 			
 			// セレクトボックスに表示する年と月の範囲指定
@@ -77,6 +77,8 @@ public class SearchServlet extends HttpServlet {
 				yearList.add(String.valueOf(i));
 				
 			}
+			
+			yearList.add("ALL");
 			
 			List<String> monthList = new ArrayList<>();
 						
@@ -164,6 +166,8 @@ public class SearchServlet extends HttpServlet {
 				
 			}
 			
+			yearList.add("ALL");
+			
 			List<String> monthList = new ArrayList<>();
 						
 			for (int i = 1; i <= 12; i++) {
@@ -179,11 +183,15 @@ public class SearchServlet extends HttpServlet {
 			
 			// リクエストパラメータを取得する
 			request.setCharacterEncoding("UTF-8");
+			String selectedYear = request.getParameter("year");
 			String year = request.getParameter("year");
+			if ("ALL".equals(year)) {
+				year = "%";
+			}
 			String selectedMonth = request.getParameter("month");
 			String month = selectedMonth;
 			if ("ALL".equals(month)) {
-				month="%";
+				month = "%";
 			} else if (month != null) {
 				month = String.format("%02d", Integer.parseInt(month));
 			}
@@ -200,7 +208,7 @@ public class SearchServlet extends HttpServlet {
 			// フォワード時に選択項目が残るようリクエストスコープにセット
 			request.setAttribute("yearList", yearList);
 			request.setAttribute("monthList", monthList);
-			request.setAttribute("selectedYear", year);
+			request.setAttribute("selectedYear", selectedYear);
 			request.setAttribute("selectedMonth", selectedMonth);
 			request.setAttribute("enteredKeyword", keyWord);
 			request.setAttribute("selectedSort", sort);
@@ -237,6 +245,7 @@ public class SearchServlet extends HttpServlet {
 
 				}
 				
+				System.out.println("-----------------------------------");
 				request.setAttribute("incomeSum", incomeSum);
 				request.setAttribute("expenseSum", expenseSum);
 				request.setAttribute("searchList", srList);
@@ -281,6 +290,7 @@ public class SearchServlet extends HttpServlet {
 
 					}
 					
+					System.out.println("-----------------------------------");
 					request.setAttribute("incomeSum", incomeSum);
 					request.setAttribute("expenseSum", expenseSum);
 					request.setAttribute("searchList", srList);
@@ -306,6 +316,7 @@ public class SearchServlet extends HttpServlet {
 				Bp bp = new Bp(id, mail, cid, money, year, month, day, memo);
 				
 				System.out.println("編集ページ遷移");
+				System.out.println("-----------------------------------");
 				// 編集ページ遷移処理を行う
 				request.setAttribute("bp", bp);
 				request.getRequestDispatcher("/WEB-INF/jsp/moneyUpdate.jsp").forward(request, response);

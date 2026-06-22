@@ -1,7 +1,7 @@
 /* 作成日：2026/06/17
  * 作成者：服部
- * 更新日：
- * 更新者： */
+ * 更新日：服部
+ * 更新者：2026/06/22 */
 
 'use strict';
 
@@ -36,7 +36,11 @@ SELECT_BOX.addEventListener("change", () => {
 /* 収支カテゴリ切り替え */
 INCOME_BTN.addEventListener("click", () => {
 	changeSelect(INCOME_CATEGORY_LIST);
+	INCOME_BTN.classList.add('active');
+	EXPENSE_BTN.classList.remove('active');
 });
 EXPENSE_BTN.addEventListener("click", () => {
 	changeSelect(EXPENSE_CATEGORY_LIST);
+	INCOME_BTN.classList.remove('active');
+	EXPENSE_BTN.classList.add('active');
 });

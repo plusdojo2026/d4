@@ -1,20 +1,22 @@
 /* 作成日：2026/06/17
  * 作成者：服部
- * 更新日：
- * 更新者： */
+ * 更新日：2026/06/22
+ * 更新者：服部 */
 
 'use strict';
 
 // チェックされているカテゴリを調べる
 function isIncomeCategory(cid) {
-	return INCOME_CATEGORY_LIST.some(c => c.id == cid);
+	return INCOME_CATEGORY_LIST.some(c => c.id === cid);
 }
 
 // チェックされているカテゴリによって、表示するカテゴリを変更する
 if(isIncomeCategory(SELECTED_ID)) {
-	cahngeSelect(INCOME_CATEGORY_LIST, SELECTED_ID);
+	changeSelect(INCOME_CATEGORY_LIST, SELECTED_ID);
+	INCOME_BTN.classList.add('active');
 } else {
 	changeSelect(EXPENSE_CATEGORY_LIST, SELECTED_ID);
+	EXPENSE_BTN.classList.add('active');
 }
 
 let form = document.getElementById("update-form");
@@ -22,6 +24,7 @@ let moneyErrorMsg = document.getElementById('update-money-msg');
 let memoErrorMsg = document.getElementById('update-memo-msg');
 const MONEY_INPUT = document.querySelector('.money');
 const MEMO_INPUT = document.querySelector('.memo');
+const BACK = document.getElementById('back');
 
 /* フォームの送信ボタンが押されたときの処理 */
 form.onsubmit = function(event) {
@@ -71,3 +74,12 @@ form.onsubmit = function(event) {
 		event.preventDefault();
 	}
 }
+
+// 戻るボタン押下時
+BACK.addEventListener('click',()=> {
+	
+	if(window.confirm('戻りますか？')) {
+		location.href = '/d4/SearchServlet';
+	}
+	
+});

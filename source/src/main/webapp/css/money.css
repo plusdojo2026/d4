@@ -1,7 +1,7 @@
 /* 作成日：2026/06/18
  * 作成者：佐藤
- * 更新者：
- * 更新日： */
+ * 更新者：服部
+ * 更新日：2026/06/22 */
 
 @charset "UTF-8";
 
@@ -43,11 +43,16 @@
 
 .income-btn {
 	color: #0000cc;
+}
+.income-btn.active {
+	background: #efefef;
 	border-color: #0000cc;
 }
-
 .expense-btn {
 	color: #cc0000;
+}
+.expense-btn.active {
+	background: #efefef;
 	border-color: #cc0000;
 }
 
@@ -59,19 +64,25 @@
 	width: 100%;
 }
 
-.money-input {
+.input-box {
 	display: flex;
 	gap: 10px;
 	width: 70%;
 	margin: 0 auto;
 	border-bottom: 1.5px #bbb solid;
+	align-items: center;
 }
-
 .input {
 	text-align: center;
 	padding-left: 15%;
 	width: 50%;
 }
+.inp-and-msg {
+	margin-top: 8px;
+	display: flex;
+	flex-direction: column;
+}
+
 .cat-input {
 	text-align: right;
 }
@@ -118,4 +129,13 @@ textarea {
 	grid-auto-flow: column;
 	gap: 2rem;
 	width: fit-content;
+}
+
+/* エラーメッセージ */
+.message {
+	color: #ff0000;
+	font-size: 8px;
+	text-align: left;
+	margin: 0 0 0 0;
+	height: auto;
 }

@@ -1,6 +1,166 @@
-/* 作成日：
- * 作成者：
- * 更新者：
- * 更新日： */
-
+/* 作成日：2026/06/18
+ * 作成者：佐藤
+ * 更新者：服部
+ * 更新日：2026/06/22 */
 @charset "UTF-8";
+
+/*ヘッダー*/
+.header {
+	display: flex;
+	align-items: center;
+}
+
+.year-month-boxs {
+	display: flex;
+	margin: 0 20px 0 auto;
+}
+
+.year-box {
+	margin-right: 10px;
+}
+
+/*メイン*/
+/* 検索バー */
+.input-box {
+	display: flex;
+	align-items: center;
+	padding-top: 15px;
+	width: 100%;
+	justify-content: center;
+}
+
+.input {
+	width: 55%;
+	height: 30px;
+}
+
+.search-btn {
+	width: 30px;
+}
+
+button {
+	border: none;
+	background: none;
+	padding: 0;
+}
+
+/* 並び替え */
+.sort {
+	text-align: right;
+	padding-left: 20px;
+}
+
+.sort, .sort select {
+	font-size: 16px;
+}
+
+/* 収支と貯蓄合計 */
+.sum-box {
+	display: flex;
+	justify-content: space-evenly;
+	padding-top: 30px;
+	text-align: center;
+	font-size: 22px;
+}
+
+.income {
+	color: #00b9ef;
+}
+
+.expense {
+	color: #ef0000;
+}
+
+.income, .expense {
+	margin: 0;
+}
+/* 収支表示 */
+.search-table {
+	padding-top: 20px;
+}
+
+.date-block {
+	margin: 15px 5%;
+	height: auto;
+	background-color: #feffee;
+	border: solid 2px #ffea7e;
+	border-radius: 8px;
+}
+
+.date-header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	padding-left: 20px;
+}
+
+.date-header-left {
+	display: flex;
+	gap: 30px;
+}
+
+.arrow {
+	display: block;
+	opacity: 1;
+	width: 30px;
+	margin-right: 10px;
+}
+
+/* 詳細 */
+.date-detail {
+	display: none;
+	margin: 3% 5%;
+	width: 90%;
+	height: 30px;
+	background-color: #ffffff;
+	border: solid 2px #ffea7e;
+	border-radius: 8px;
+}
+
+.bp {
+	display: flex;
+	font-weight: 500;
+	margin-top: 1%;
+	margin-left: 3%;
+}
+
+.bp-right {
+	display: flex;
+	font-weight: 400;
+	margin-left: 15%;
+	gap: 30px;
+}
+
+.memo {
+	font-size: 10px;
+}
+/* 隠しメニュー表示ボタン */
+.menu-btn {
+	margin-left: auto;
+	margin-right: 5px;
+	width: 22px;
+	height: 22px;
+}
+.menu-btn.clicked {
+	background-color: #eaeaea;
+	border-radius: 50px;
+}
+.menu {
+	display: flex;
+	display: none;
+	flex-direction: column;
+	align-items: flex-end;
+	margin-top: -5px;
+	right: 0;
+	text-align: right;
+	margin-right: 20px
+}
+.btn {
+	background-color: #ffffff;
+	border-color: #0080ff;
+	border-radius: 5px;
+	z-index: 9999;
+}
+#delete {
+	color: #ff0000;
+}

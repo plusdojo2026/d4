@@ -1,6 +1,142 @@
-/* 作成日：
- * 作成者：
- * 更新者：
- * 更新日： */
-
+/* 作成日：2026/06/15
+ * 作成者：田中
+ * 更新日：2026/06/22
+ * 更新者：佐藤 */
 @charset "UTF-8";
+
+/* メイン */
+main {
+	max-width: 100%;
+	text-align: center;
+}
+
+/* ヘッダー */
+.header {
+	display: flex;
+	align-items: center;
+	background-color: #ffffff;
+	position: sticky;
+	top: 0;
+	z-index: 1000;
+}
+
+/* 更新ボタン */
+input[type="submit"] {
+	margin: 0 20px 0 auto;
+	width: 80px;
+	border-radius: 20px;
+	background-color: #ffffe0;
+	border: 1px solid #fd7e00;
+	padding: 6px;
+}
+
+/* ユーザ設定 */
+.set-box, .radio-box {
+	text-align: left;
+	font-size: 16px;
+	font-weight: 500;
+	margin-left: 2%;
+	margin-right: 2%;
+}
+.set-box {
+	margin-top: 5%;
+
+}
+
+input[type="text"] {
+	margin-top: 2px 0 4px 5%;
+	max-width: 100%;
+	width: 90%;
+	height: 20px;
+}
+.input-box {
+	margin: 2px auto 5px 5%;
+}
+
+.user-setting {
+	margin-top: 6px;
+	padding-left: 0;
+}
+
+
+/* カテゴリー設定 */
+.category-title {
+	display: flex;
+	align-items: center;
+	text-align: left;
+	padding-top: 10px;
+	padding-right: 10px;
+	font-size: 16px;
+	font-weight: 500;
+	margin-top: 5%;
+	margin-left: 2%;
+	margin-right: 2%;
+	border-top: #595959 dotted;
+}
+.in-ex-btns {
+	display: flex;
+	margin-left: auto;
+}
+
+.income-btn {
+	width: auto;
+	color: #0000cc;
+	padding: 2px 15px;
+	border-radius: 20px;
+	background-color: #ffffff;
+}
+.income-btn.active {
+	border: 1.7px solid #0000cc;
+	background-color: #efefef;
+}
+.expense-btn {
+	width: auto;
+	color: #cc0000;
+	padding: 2px 15px;
+	margin-left: 10px;
+	border-radius: 20px;
+	background-color: #ffffff;
+}
+.expense-btn.active {
+	border: 1.7px solid #cc0000;
+	background-color: #efefef;
+}
+
+.category-box {
+	margin-top: 3%;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: 8px 10px;
+}
+
+.category-box input {
+	width: 90%;
+	box-sizing: border-box;
+}
+
+/*起動時遷移先*/
+.radio-box {
+	margin-top: 5%;
+	padding-top: 5px;
+	border-top: #595959 dotted;
+}
+
+.radio {
+	margin: 3px auto 0 auto;
+	width: 80%;
+	margin-top: 3px;
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	font-size: 14px;
+}
+
+/* アカウント削除ボタン */
+button[type="submit"] {
+	margin-top: 20%;
+	width: auto;
+	padding: 5px 15px;
+	border-radius: 20px;
+	color: #ffffff;
+	background-color: #ff0000;
+	border: 2px solid rgb(22, 22, 22);
+}

@@ -286,7 +286,8 @@ public class BpDAO {
 			
 			// SELECT文を準備する
 			String sql = "SELECT * FROM Bp b INNER JOIN Category c ON b.cid = c.id "
-					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year=? AND b.month LIKE ?) ORDER BY b.month " + order +", b.day " + order;
+					+ "WHERE b.mail=? AND (c.name LIKE ? OR b.memo LIKE ?) AND (b.year LIKE ? AND b.month LIKE ?) "
+					+ "ORDER BY b.year " + order + ", b.month " + order +", b.day " + order;
 			pStmt = con.prepareStatement(sql);
 			
 			// ？の部分に値を入れる処理

@@ -1,28 +1,32 @@
 /* 作成日：2026/06/17
  * 作成者：服部
- * 更新日：
- * 更新者： */
+ * 更新日：服部
+ * 更新者：2026/06/22 */
 
 'use strict';
 
 let kind = 'income';
 let form = document.getElementById('set-form');
 let del = document.getElementById('delete-form');
-
-console.log(INCOME_CATEGORY_LIST);
-console.log(EXPENSE_CATEGORY_LIST);
+const INCOME_BTN = document.querySelector('.income-btn');
+const EXPENSE_BTN = document.querySelector('.expense-btn');
 
 /* カテゴリーの表示変更 */
 function changeCategory(type) {
-	console.log('カテゴリーの変更');
 	kind = type;
 	const LIST = (type === 'income') ? INCOME_CATEGORY_LIST : EXPENSE_CATEGORY_LIST;
-	
-	console.log('for文はいるよー');
+
 	LIST.forEach(c => {
 		document.getElementById('name' + c.number).value = c.name;
 		document.getElementById('name' + c.number).name = (type === 'income') ? 'income' : 'expense';
 	});
+	if(LIST === INCOME_CATEGORY_LIST){
+		INCOME_BTN.classList.add('active');
+		EXPENSE_BTN.classList.remove('active');
+	} else if(LIST === EXPENSE_CATEGORY_LIST) {
+		EXPENSE_BTN.classList.add('active');
+		INCOME_BTN.classList.remove('active');
+	}
 }
 
 /* 収支切り替えてもテキストボックスに入力したものが保存される */

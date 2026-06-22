@@ -1,8 +1,8 @@
 <!-- 
  作成日：2026/06/11
  作成者：深井、服部
- 更新者：服部
- 更新日：2026/06/16
+ 更新者：2026/06/22
+ 更新日：服部
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -89,22 +89,35 @@
 		<div class="img-title">
 			<img src="img/image.png">
 			モチベを上げる画像
-			<!-- 
-			<form method="POST" action="/d4/MyPageServlet" id="input-img-form">
-				<label class="upload-area">
-					<input type="file" name="photo" accept="image/*">
-					<input type = "submit" value="追加">
+		</div>
+		<!-- 画像登録欄 -->
+		<div class="img-input">
+			<input type="file" form="input-img-form" name="photo" accept="image/*">
+			<form method="POST" action="/d4/MyPageServlet" id="input-img-form" enctype="multipart/form-data">
+				<label>
+					<input type="submit" class="up-load" value="アップロード">
 				</label>
 			</form>
-			-->
 		</div>
-		<c:forEach var="img" items="${imgList}">
-			<form method="POST" action="/d4/MyPageServlet" class="delete-img-form">
-				<img src="${img.path}">
-				<input type="hidden" name="imgId" value="${img.id}">
-				<button type="submit"><img src="img/dust-box.png"></button>
-			</form>
-		</c:forEach>
+		<div class="mypage-message-area">
+			<c:if test="${not empty sessionScope.mypageMessage}">
+				<p class="error">${sessionScope.mypageMessage}</p>
+				<c:remove var="mypageMessage" scope="session" />
+			</c:if>
+		</div>
+		<div class="upload-area">
+			<c:forEach var="img" items="${imgList}">
+				<form method="POST" action="/d4/MyPageServlet" class="delete-img-form">
+					<div class="img-item">
+						<img class="img" src="${img.path}">
+						<input type="hidden" name="imgId" value="${img.id}">
+						<button type="submit" name="submit" value="削除">
+							<img class="dust-box" src="img/dust-box.png">
+						</button>
+					</div>
+				</form>
+			</c:forEach>
+		</div>
 	</main>
 	<!-- フッター -->
 	<footer>

@@ -1,7 +1,7 @@
 <!-- 
  作成日：2026/06/10
  作成者：木下、佐藤
- 更新日：2026/06/17
+ 更新日：2026/06/22
  更新者：服部
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
@@ -41,34 +41,36 @@
 		<form method="POST" action="/d4/MoneyUpdateServlet" id="update-form">
 			<div class="content">
 				
-				<div class="money-input">
+				<div class="input-box">
 					日付
 					<div class="input">
 						<input type="date" name="date" value="${date}"><br>
 					</div>
 				</div>
 				
-				<div class="money-input">
+				<div class="input-box">
 					金額
-					<div class="input">
-						<input type="text" name="money" class="money" value="${bp.money}"><br>
+					<div class="input inp-and-msg">
+						<input type="text" name="money" class="money" value="${bp.money}">
+						<span class="message" id="update-money-msg"></span>
 					</div>
-					<span class="message" id="update-money-msg"></span><br>
 				</div>
 				
-				<div class="money-input">
+				<div class="input-box">
 					カテゴリ
 					<div class="cat-input">
 						<select class="select-box"></select><br>
 					</div>
 				</div>
 				
-				<div class="money-input">
+				<div class="input-box">
 					<div class="memo-box">
-						メモ<br>
-						<textarea name="memo" class="memo"><c:out value="${bp.memo}"></c:out></textarea>
+						<div class="inp-and-msg">
+							メモ<br>
+							<textarea name="memo" class="memo"><c:out value="${bp.memo}"></c:out></textarea>
+							<span class="message" id="update-memo-msg"></span>
+						</div>
 					</div>
-					<span class="message" id="update-memo-msg"></span><br>
 				</div>
 				
 			</div>
@@ -76,7 +78,7 @@
 			<input type="hidden" name="cid" class="hidden-cid" value="${cid}">
 			
 			<div class="buttons">
-				<button class="return" type="button" name="return" onclick="history.back();">戻る</button>
+				<button id="back" class="return" type="button" name="return">戻る</button>
 				<input class="conf" type="submit" name="conf" value="確定">
 			</div>
 		</form>
@@ -95,7 +97,7 @@
 	
 	<!-- スクリプト -->
 	<script>
-		const SELECTED_ID = "${cid}";
+		const SELECTED_ID="${bp.cid}";
 		const INCOME_CATEGORY_LIST = [];
 		<c:forEach var="category" items="${incomeCategoryList}">
 			INCOME_CATEGORY_LIST.push({id: "${category.id}", name: "${category.name}"});

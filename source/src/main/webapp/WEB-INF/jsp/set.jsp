@@ -1,8 +1,8 @@
 <!-- 
  作成日：2026/06/16
  作成者：服部
- 更新者：
- 更新日： 
+ 更新者：服部
+ 更新日：2026/06/22 
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -16,21 +16,46 @@
 	<link rel="stylesheet" href="css/set.css">
 </head>
 <body>
-	<header>
+	<header class="header">
 		<div class="logo">
 			<h1><img src="img/logo.png" alt="ぽちため"></h1>
 		</div>
-		<div>
-			<input type="submit" name="submit" form="set-form" value="更新">
-		</div>
+		<input type="submit" name="submit" form="set-form" value="更新">
 	</header>
 	<main>
 		<form method="POST" action="/d4/SetServlet" id="set-form">
+			<div class="user-setting">
+				<div class="set-box">
+					ニックネーム<br>
+					<div class="input-box">
+						<input type="text" name="name" class="input" placeholder="ホーム画面で表示されます" value="${name}">
+					</div>
+				</div>
+				<div class="set-box">
+					目的<br>
+					<c:forEach var="i" begin="1" end="3">
+						<c:set var="purpose" value="${purposeList[i-1]}"/>
+						<div class="input-box">
+							<input type="text" name="text" class="input" placeholder="${i}つ目" value="${purpose.text}"><br>
+						</div>
+						<input type="hidden" name="id" value="${purpose.id}">
+					</c:forEach>
+				</div>
+				<div class="set-box">
+					目標金額<br>
+					<div class="input-box">
+						<input type="text" name="target" class="input" placeholder="目的達成に必要な金額" value="${target}">
+					</div>
+				</div>
+			</div>
+			
 			<div class="category-setting">
 				<div class="category-title">
 					カテゴリ設定
-					<button type="button" class="income-btn" onclick="changeCategory('income')">収入</button>
-					<button type="button" class="expense-btn" onclick="changeCategory('expense')">支出</button>
+					<div class="in-ex-btns">
+						<button type="button" class="income-btn active" onclick="changeCategory('income')">収入</button>
+						<button type="button" class="expense-btn" onclick="changeCategory('expense')">支出</button>
+					</div>
 				</div>
 				<div class="category-box">
 					<c:forEach var="i" begin="1" end="10">
@@ -41,46 +66,27 @@
 					</c:forEach>
 				</div>
 			</div>
-			
-			<div class="user-setting">
-				<div class="set-box">
-					ニックネーム<br>
-					<input type="text" name="name" class="input" placeholder="ホーム画面で表示されます" value="${name}">
+			<div class="radio-box">
+				起動時遷移先<br>
+				<div class="radio">
+					<label>
+						<input type="radio" name="trans" value="/d4/MyPageServlet" <c:if test="${trans == '/d4/MyPageServlet'}">checked="checked"</c:if>>
+						マイページ
+					</label>
+					<label>
+						<input type="radio" name="trans" value="/d4/MoneyRegistServlet" <c:if test="${trans == '/d4/MoneyRegistServlet'}">checked="checked"</c:if>>
+						収支登録
+					</label>
+					<label>
+						<input type="radio" name="trans" value="/d4/SearchServlet" <c:if test="${trans == '/d4/SearchServlet'}">checked="checked"</c:if>>
+						検索
+					</label>
+					<label>
+						<input type="radio" name="trans" value="/d4/TableServlet" <c:if test="${trans == '/d4/TableServlet'}">checked="checked"</c:if>>
+						集計表
+					</label>
 				</div>
-				<div class="set-box">
-					目的<br>
-					<c:forEach var="i" begin="1" end="3">
-						<c:set var="purpose" value="${purposeList[i-1]}"/>
-						<input type="text" name="text" class="input" placeholder="${i}つ目" value="${purpose.text}"><br>
-						<input type="hidden" name="id" value="${purpose.id}">
-					</c:forEach>
 				</div>
-				<div class="set-box">
-					目標金額<br>
-					<input type="text" name="target" class="input" placeholder="目的達成に必要な金額" value="${target}">
-				</div>
-				<div class="set-box">
-					起動時遷移先<br>
-					<div class="radio">
-						<label>
-							<input type="radio" name="trans" value="/d4/MyPageServlet" <c:if test="${trans == '/d4/MyPageServlet'}">checked="checked"</c:if>>
-							マイページ
-						</label>
-						<label>
-							<input type="radio" name="trans" value="/d4/MoneyRegistServlet" <c:if test="${trans == '/d4/MoneyRegistServlet'}">checked="checked"</c:if>>
-							収支登録
-						</label>
-						<label>
-							<input type="radio" name="trans" value="/d4/SearchServlet" <c:if test="${trans == '/d4/SearchServlet'}">checked="checked"</c:if>>
-							検索
-						</label>
-						<label>
-							<input type="radio" name="trans" value="/d4/TableServlet" <c:if test="${trans == '/d4/TableServlet'}">checked="checked"</c:if>>
-							集計表
-						</label>
-					</div>
-				</div>
-			</div>
 		</form>
 		<div class="delete-user">
 			<form method="POST" action="/d4/SetServlet" id="delete-form">
