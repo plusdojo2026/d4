@@ -20,7 +20,7 @@ public class PurposeDAO {
 	// データベースの情報を格納するフィールド
 	private final String URL = "jdbc:mysql://localhost:3306/d4?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true";
 	private final String USER = "d4";
-	private final String PASS = "password";
+	private final String PASS = "spDzuBN8JAwDZttc";
 
 	// 目的を登録して、成功ならtrueを返す
 	public boolean insert(String mail) throws Exception {

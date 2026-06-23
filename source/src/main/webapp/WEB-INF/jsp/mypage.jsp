@@ -6,6 +6,7 @@
  -->
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -63,10 +64,10 @@
 				<tr>
 					<td>目標金額</td>
 					<td class="target-amount">
-						<c:if test="${not empty sessionScope['loginUser.target']}">
-							<c:out value="${loginUser.target}"></c:out>
+						<c:if test="${not empty loginUser.target}">
+							<fmt:formatNumber value="${loginUser.target}" type="number"/>
 						</c:if>
-						<c:if test="${empty sessionScope['loginUser.target']}">
+						<c:if test="${empty loginUser.target}">
 							---
 						</c:if>
 						円
@@ -75,7 +76,7 @@
 					<td class="saving-title">貯金額</td>
 					<td class="saving-amount">
 						<c:if test="${not empty savings}">
-							<c:out value="${savings}"></c:out>
+							<fmt:formatNumber value="${savings}" type="number"/>
 						</c:if>
 						<c:if test="${empty savings}">
 							0

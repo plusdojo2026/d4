@@ -1,7 +1,7 @@
-/* 作成日：6月11日
+/* 作成日：2026/06/11
  * 作成者：佐藤凜々
- * 更新者：
- * 更新日： */
+ * 更新者：服部
+ * 更新日：2026/06/23 */
 
 @charset "UTF-8";
 
@@ -29,6 +29,7 @@ h1 {
 .input-box {
 	position: relative;
 	margin-top: 35px;
+	height: 55px;
 }
 
 .input {
@@ -40,9 +41,11 @@ h1 {
 
 .eye {
 	width: 23px;
+	height: auto;
 	position: absolute;
-	top: 27px;
+	top: 50%;
 	right: 3px;
+	cursor: pointer;
 }
 
 
@@ -51,8 +54,10 @@ input[type="submit"] {
 	width: 150px;
 	padding: 10px 0px 10px 0px;
 	border-radius: 30px;
-	background-color: #fffcd2;
-	border-color: #ffbc00;
+	color: #FFFFFF;
+	background-color: orange;
+	border-color: rgb(255, 134, 62);
+	font-weight: bold;
 }
 
 .button {

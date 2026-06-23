@@ -123,13 +123,17 @@
 										<input type="hidden" name="month" value="${bpView.bp.month}">
 										<input type="hidden" name="day" value="${bpView.bp.day}">
 										<input type="hidden" name="date" value="${search.date}">
+										<input type="hidden" name="year" value="${selectedYear}">
+										<input type="hidden" name="month" value="${selectedMonth}">
+										<input type="hidden" name="keyword" value="${enteredKeyword}">
+										<input type="hidden" name="sort" value="${selectedSort}">
 									</form>
 									<form method="POST" class="bp-delete" action="/d4/SearchServlet">
 										<input type="submit" name="submit" id="delete" class="btn" value="削除">
 										<input type="hidden" name="id" value="${bpView.bp.id}">
 										<input type="hidden" name="year" value="${selectedYear}">
 										<input type="hidden" name="month" value="${selectedMonth}">
-										<input type="hidden" name="keyword" value="${keyWord}">
+										<input type="hidden" name="keyword" value="${enteredKeyword}">
 										<input type="hidden" name="sort" value="${selectedSort}">
 									</form>
 								</div>

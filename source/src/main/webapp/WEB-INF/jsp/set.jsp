@@ -28,7 +28,8 @@
 				<div class="set-box">
 					ニックネーム<br>
 					<div class="input-box">
-						<input type="text" name="name" class="input" placeholder="ホーム画面で表示されます" value="${name}">
+						<input type="text" name="name" id="nickname" class="input" placeholder="ホーム画面で表示されます" value="${name}">
+						<div id="name-error" class="error"></div>
 					</div>
 				</div>
 				<div class="set-box">
@@ -36,7 +37,8 @@
 					<c:forEach var="i" begin="1" end="3">
 						<c:set var="purpose" value="${purposeList[i-1]}"/>
 						<div class="input-box">
-							<input type="text" name="text" class="input" placeholder="${i}つ目" value="${purpose.text}"><br>
+							<input type="text" name="text" id="purposerist" class="input" placeholder="${i}つ目" value="${purpose.text}"><br>
+							<div id="purpose-error" class="error"></div>
 						</div>
 						<input type="hidden" name="id" value="${purpose.id}">
 					</c:forEach>
@@ -44,7 +46,8 @@
 				<div class="set-box">
 					目標金額<br>
 					<div class="input-box">
-						<input type="text" name="target" class="input" placeholder="目的達成に必要な金額" value="${target}">
+						<input type="text" name="target" id="targetrist" class="input" placeholder="目的達成に必要な金額" value="${target}">
+						<div id="target-error" class="error"></div>
 					</div>
 				</div>
 			</div>
@@ -57,6 +60,7 @@
 						<button type="button" class="expense-btn" onclick="changeCategory('expense')">支出</button>
 					</div>
 				</div>
+				<div id="cat-error" class="error"></div>
 				<div class="category-box">
 					<c:forEach var="i" begin="1" end="10">
 						<c:set var="category" value="${incomeCategoryList[i-1]}"/>

@@ -8,29 +8,28 @@
 	display: flex;
 	max-width: 100%;
 	height: 100%;
-	margin: 50px 0 30px 0;
-	font-size: 50px;
+	margin: 10% 0 5% 0;
+	font-size: 25px;
 	gap: 30px;
 	justify-content: center;
 	align-items: center;
 }
 .year-btn {
 	background-color: #ffffdf;
-	border-color: #fff0b7;
+	border: 2px solid rgb(255, 234, 136);
 	border-radius: 2000px;
 	align-items: center;
-	font-size: 30px;
+	font-size: 20px;
+	text-align: center;
 }
 
 /* 収支と貯蓄合計 */
 .sum-box {
+	margin-bottom: 5%;
 	display: flex;
-	font-size: 20px;
-	max-width: 100%;
-	margin: 0 0 30px 0;
-	justify-content: center;
+	justify-content: space-evenly;
 	text-align: center;
-	gap: 20px;
+	font-size: 18px;
 }
 .income, .expense, .savings {
 	margin: 0;

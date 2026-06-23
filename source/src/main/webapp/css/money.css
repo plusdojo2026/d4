@@ -38,22 +38,25 @@
 	height: 30px;
 	font-size: 16px;
 	border-radius: 8px;
+	border: 1.7px solid #000000;
 	background-color: #FFFFFF;
 }
 
 .income-btn {
-	color: #0000cc;
+	color: #0080ff;
 }
 .income-btn.active {
-	background: #efefef;
-	border-color: #0000cc;
+	color: #000080;
+	background-color: #efefef;
+	border-color: #0080ff;
 }
 .expense-btn {
-	color: #cc0000;
+	color: #ff0000;
 }
 .expense-btn.active {
-	background: #efefef;
-	border-color: #cc0000;
+	color: #800040;
+	background-color: #efefef;
+	border-color: #ff0000;
 }
 
 /* フォーム */
@@ -85,12 +88,17 @@
 
 .cat-input {
 	text-align: right;
+	width: 52%;
 }
 
 input[type="date"], input[type="text"], select, textarea {
 	width: 100%;
 	border: none; /*枠線なくす*/
 	outline: none;
+}
+
+option{
+	font-size: 5px;
 }
 
 .memo-box {
@@ -112,6 +120,7 @@ textarea {
 	width: 100px;
 	padding: 5px 0px 5px 0px;
 	border-radius: 30px;
+	border: 1.5px solid #ffbc00;
 	background-color: #fffcd2;
 	border-color: #ffbc00;
 }

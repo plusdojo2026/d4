@@ -21,12 +21,12 @@ form[id='logout-form'] {
 
 #form-logout {
 	font-size: 12px;
-	width: 80px;
+	width: auto;
 	padding: 3px 12px 3px 12px;
 	border-radius: 30px;
 	color: #FFFFFF;
 	background-color: indianred;
-	border: 1.5px solid rgb(55, 55, 55);
+	border: 1.5px solid #800000;
 }
 
 /* 目的題名 */
@@ -49,19 +49,22 @@ form[id='logout-form'] {
 	display: flex;
 	flex-direction: column;
 	justify-content: space-between;
-	height: 140px;
+	height: auto;
 	padding: 15px 20px 20px 35px;
 	margin: 15px 5%;
 	font-weight: bold;
 	background-color: #feffee;
 	border: solid 3px #ffea7e;
 	border-radius: 30px;
+	gap: 10px;
 }
 
 /* 目的表示 */
 .purpose {
+	margin: 10px auto 10px 0;
 	font-size: 20px;
 	font-weight: 400;
+	
 }
 
 .purpose ul {
@@ -109,16 +112,26 @@ td {
 	color: rgb(55, 55, 55);
 }
 .img-input {
-	margin: 20px 0 0 20px;
+	margin-top: 20px;
 	display: flex;
+	justify-content: space-between;
 	align-items: center;
-	gap: 5%;
+	gap: 2%;
+}
+input[type="file"]{
+	margin-left: 10%;
+	font-size: 12px;
+}
+
+.upload-btn {
+	right: 5px;
 }
 
 .up-load {
+	margin-right: 20px;
 	font-size: 10px;
 	width: auto;
-	padding: 3px 12px 3px 12px;
+	padding: 3px 10px 3px 10px;
 	border-radius: 30px;
 	color: black;
 	background-color: #f0f8ff;
@@ -150,8 +163,7 @@ td {
 }
 
 .mypage-message-area {
-	width: 100%;
-	margin: 0 auto 40px 22px;
+	margin: 0 auto 40px 11%;
 }
 .error {
 	font-size: 15px;

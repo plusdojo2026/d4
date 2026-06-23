@@ -18,7 +18,7 @@ public class UserDAO {
 	// データベースの情報を格納するフィールド
 	private final String URL = "jdbc:mysql://localhost:3306/d4?characterEncoding=utf8&useSSL=false&serverTimezone=GMT%2B9&rewriteBatchedStatements=true";
 	private final String USER = "d4";
-	private final String PASS = "password";
+	private final String PASS = "spDzuBN8JAwDZttc";
 
 	// 引数で指定されたUserでログイン成功ならuser情報を返す
 	public User isLoginOk(User inputUser) throws Exception {
@@ -33,7 +33,7 @@ public class UserDAO {
 			con = getConnection();
 
 			// SELECT文を準備する
-			String sql = "SELECT * FROM User WHERE `mail`=? AND `pass`=?";
+			String sql = "SELECT * FROM User WHERE BINARY `mail`=? AND BINARY `pass`=?";
 			pStmt = con.prepareStatement(sql);
 
 			// ？の部分に値を入れる処理

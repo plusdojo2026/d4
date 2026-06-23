@@ -42,6 +42,23 @@ function toggleDetail(dateHeader) {
 	});
 	
 	ARROW.src = IS_OPEN ? 'img/down-list.png' : 'img/up-list.png';
+	
+	const MEMOS = DATE_BLOCK.querySelectorAll(".memo");
+	console.log(MEMOS.length);
+	
+	MEMOS.forEach(function(memo) {
+		
+		if(!memo.dataset.full) {
+			memo.dataset.full = memo.textContent;
+		}
+		
+		const text = memo.dataset.full;
+		
+		if (text.length > 15) {
+			memo.textContent = text.substring(0, 15) + "…";
+		}
+		
+	});
 }
 
 function toggleMenu(menuBtn) {
@@ -62,6 +79,7 @@ function toggleMenu(menuBtn) {
 	const IS_OPEN = MENU.style.display === 'block';
 	MENU.style.display = IS_OPEN ? 'none' : 'block' ;
 	menuBtn.classList.add('clicked');
+	
 }
 
 // 削除ボタン押下時

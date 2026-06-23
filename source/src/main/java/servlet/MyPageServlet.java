@@ -83,7 +83,7 @@ public class MyPageServlet extends HttpServlet {
 				expenseSum += expense.getMoney();
 			}
 			savingSum = incomeSum - expenseSum;
-			request.setAttribute("saving", savingSum);
+			request.setAttribute("savings", savingSum);
 
 			// 画像取得
 			ImgDAO iDao = new ImgDAO();
@@ -171,7 +171,7 @@ public class MyPageServlet extends HttpServlet {
 				String uniqueFileName = System.currentTimeMillis() + "_" + fileName;
 
 				// サーバー内の絶対パス
-				String uploadPath = getServletContext().getRealPath("img");
+				String uploadPath = getServletContext().getRealPath("/") + "img";
 				part.write(uploadPath + File.separator + uniqueFileName);
 
 				// ブラウザ用のパス

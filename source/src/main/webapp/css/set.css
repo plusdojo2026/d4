@@ -84,9 +84,10 @@ input[type="text"] {
 	padding: 2px 15px;
 	border-radius: 20px;
 	background-color: #ffffff;
+	border: 1.3px solid black;
 }
 .income-btn.active {
-	border: 1.7px solid #0000cc;
+	border-color: #0000cc;
 	background-color: #efefef;
 }
 .expense-btn {
@@ -96,9 +97,10 @@ input[type="text"] {
 	margin-left: 10px;
 	border-radius: 20px;
 	background-color: #ffffff;
+	border: 1.3px solid black;
 }
 .expense-btn.active {
-	border: 1.7px solid #cc0000;
+	border-color: #cc0000;
 	background-color: #efefef;
 }
 
@@ -132,11 +134,17 @@ input[type="text"] {
 
 /* アカウント削除ボタン */
 button[type="submit"] {
-	margin-top: 20%;
+	margin-top: 18%;
 	width: auto;
 	padding: 5px 15px;
 	border-radius: 20px;
 	color: #ffffff;
 	background-color: #ff0000;
-	border: 2px solid rgb(22, 22, 22);
+	border: 1.5px solid #800000;
+}
+
+.error-border {
+    border: 2px solid red;
+    background-color: #ffecec;
+    border-radius: 4px;
 }

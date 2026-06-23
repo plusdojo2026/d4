@@ -30,13 +30,23 @@
 		<div class="input-form">  <!-- class追加 -->
 			<div class="input-box">
 				<label for="mail">メールアドレス</label><br>
-				<input type="text" id="mail" class="input" name="mail" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelMail}"/>>
+				<c:if test="${result == '失敗'}">
+					<input type="text" id="mail" class="input" name="mail" style="border: 2px solid #FF0000;" value=<c:out value="${cancelMail}"/>>
+				</c:if>
+				<c:if test="${result != '失敗'}">
+					<input type="text" id="mail" class="input" name="mail" value="demo.user@example.com">
+				</c:if>
 				<span class="message" id="mail-error"></span>
 			</div>
 			
 			<div class="input-box">
 				<label for="pass">パスワード</label><br>
-				<input type="password" id="pass" class="input" name="pass" <c:if test="${result == '失敗'}">style="border: 2px solid #FF0000;"</c:if> value=<c:out value="${cancelPass}"/>>
+				<c:if test="${result == '失敗'}">
+					<input type="password" id="pass" class="input" name="pass" style="border: 2px solid #FF0000;" value=<c:out value="${cancelPass}"/>>
+				</c:if>
+				<c:if test="${result != '失敗'}">
+					<input type="password" id="pass" class="input" name="pass" value="DemoPass123">
+				</c:if>
 				<span id="change-pass"><img id="eye-img" class="eye" src="img/close-eye.png"></span>
 				<span class="message" id="ps-error"></span>
 			</div>
