@@ -28,26 +28,26 @@
 				<div class="set-box">
 					ニックネーム<br>
 					<div class="input-box">
-						<input type="text" name="name" id="nickname" class="input" placeholder="ホーム画面で表示されます" value="${name}">
-						<div id="name-error" class="error"></div>
+						<input type="text" name="name" id="nick-name" class="input" placeholder="ホーム画面で表示されます" value="${name}"><br>
+						<span id="name-error" class="error"></span>
 					</div>
 				</div>
 				<div class="set-box">
 					目的<br>
-					<c:forEach var="i" begin="1" end="3">
-						<c:set var="purpose" value="${purposeList[i-1]}"/>
-						<div class="input-box">
-							<input type="text" name="text" id="purposerist" class="input" placeholder="${i}つ目" value="${purpose.text}"><br>
-							<div id="purpose-error" class="error"></div>
-						</div>
-						<input type="hidden" name="id" value="${purpose.id}">
-					</c:forEach>
+					<div class="input-box">
+						<c:forEach var="i" begin="1" end="3">
+							<c:set var="purpose" value="${purposeList[i-1]}"/>
+							<input type="text" name="text" class="input purpose" placeholder="${i}つ目" value="${purpose.text}"><br>
+							<input type="hidden" name="id" value="${purpose.id}">
+						</c:forEach>
+					<span id="purpose-error" class="error"></span>
+					</div>
 				</div>
 				<div class="set-box">
 					目標金額<br>
 					<div class="input-box">
-						<input type="text" name="target" id="targetrist" class="input" placeholder="目的達成に必要な金額" value="${target}">
-						<div id="target-error" class="error"></div>
+						<input type="text" name="target" id="target" class="input" placeholder="目的達成に必要な金額" value="${target}"><br>
+						<span id="target-error" class="error"></span>
 					</div>
 				</div>
 			</div>
@@ -60,12 +60,14 @@
 						<button type="button" class="expense-btn" onclick="changeCategory('expense')">支出</button>
 					</div>
 				</div>
-				<div id="cat-error" class="error"></div>
+				<div class="error-box">
+					<span id="cat-error" class="error"></span>
+				</div>
 				<div class="category-box">
 					<c:forEach var="i" begin="1" end="10">
 						<c:set var="category" value="${incomeCategoryList[i-1]}"/>
 						<div id="number${i}" class="category-input">
-							<input type="text" id="name${i}" oninput="onInput(${i})" name="cname" placeholder="${i}つ目" value="${category.name}" oninput="onInput(${i})">
+							<input type="text" id="name${i}" class="category" oninput="onInput(${i})" name="cname" placeholder="${i}つ目" value="${category.name}">
 						</div>
 					</c:forEach>
 				</div>
@@ -113,11 +115,11 @@
 	<script>
 		const INCOME_CATEGORY_LIST = [];
 		<c:forEach var="category" items="${incomeCategoryList}">
-			INCOME_CATEGORY_LIST.push({id: ${category.id}, name: "${category.name}", number: ${category.number}});
+			INCOME_CATEGORY_LIST.push({id: ${category.id}, name: "${category.name}", number: ${category.number}, error: false});
 		</c:forEach>
 		const EXPENSE_CATEGORY_LIST = [];
 		<c:forEach var="category" items="${expenseCategoryList}">
-			EXPENSE_CATEGORY_LIST.push({id: ${category.id}, name: "${category.name}", number: ${category.number}});
+			EXPENSE_CATEGORY_LIST.push({id: ${category.id}, name: "${category.name}", number: ${category.number}, error: false});
 		</c:forEach>
 	</script>
 	<script src="js/common.js"></script>

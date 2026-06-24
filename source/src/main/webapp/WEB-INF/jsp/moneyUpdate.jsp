@@ -76,12 +76,20 @@
 			</div>
 			<input type="hidden" name="id" value="${bp.id}">
 			<input type="hidden" name="cid" class="hidden-cid" value="${cid}">
-			
-			<div class="buttons">
-				<button id="back" class="return" type="button" name="return">戻る</button>
-				<input class="conf" type="submit" name="conf" value="確定">
-			</div>
 		</form>
+		
+		<form method="GET" action="/d4/SearchServlet" id="return-form">
+			<input type="hidden" name="selected-year" value="${selectedYear}">
+			<input type="hidden" name="selected-month" class="hidden-cid" value="${selectedMonth}">
+			<input type="hidden" name="entered-keyword" value="${enteredKeyword}">
+			<input type="hidden" name="selected-sort" value="${selectedSort}">
+		</form>	
+			
+		<div class="buttons">
+			<button id="back" class="return" type="button" name="return">戻る</button>
+			<input class="conf" type="submit" name="conf" form="update-form" value="確定">
+		</div>
+		
 	</main>
 	<footer>
 		<nav class="nav">

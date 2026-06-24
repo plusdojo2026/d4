@@ -79,7 +79,7 @@ form.onsubmit = function(event) {
 BACK.addEventListener('click',()=> {
 	
 	if(window.confirm('戻りますか？')) {
-		location.href = '/d4/SearchServlet';
+		document.getElementById("return-form").submit();
 	}
 	
 });

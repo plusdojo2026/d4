@@ -21,3 +21,22 @@ LOGOUT.onsubmit = function(event) {
 		event.preventDefault();
 	}
 }
+
+function clampTo8Digits(selector) {
+    const el = document.querySelector(selector);
+    if (!el) return; 
+
+    let num = el.textContent.replace(/,/g, "");
+
+    if (!/^[0-9]+$/.test(num)) return;
+
+    if (num.length > 8) {
+        el.textContent = "99,999,999円";
+        return;
+    }
+
+    el.textContent = Number(num).toLocaleString() + "円";
+}
+
+clampTo8Digits(".target-amount");
+clampTo8Digits(".saving-amount");

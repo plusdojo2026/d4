@@ -60,7 +60,7 @@ button {
 	justify-content: space-evenly;
 	padding-top: 30px;
 	text-align: center;
-	font-size: 22px;
+	font-size: 18px;
 }
 
 .income {
@@ -71,7 +71,7 @@ button {
 	color: #ef0000;
 }
 
-.income, .expense {
+.income, .expense, .saving {
 	margin: 0;
 }
 /* 収支表示 */
@@ -153,14 +153,23 @@ button {
 	margin-top: -5px;
 	right: 0;
 	text-align: right;
-	margin-right: 20px
+	margin-right: 20px;
+	z-index: 10000;
 }
 .btn {
+	color: black;
 	background-color: #ffffff;
-	border-color: #0080ff;
 	border-radius: 5px;
+	border: 1px solid #0080ff;
 	z-index: 9999;
 }
 #delete {
 	color: #ff0000;
+}
+#more button {
+	margin-top: 5%;
+	color: blue;
+	text-decoration: underline;
+	width: 100%;
+	text-align: center;
 }

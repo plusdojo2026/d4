@@ -114,7 +114,7 @@ public class CategoryDAO {
 			pStmt.setInt(2, category.getId());
 
 			// 追加できたかを確認する
-			if(pStmt.executeUpdate() >= 1) {
+			if(pStmt.executeUpdate() >= 0) {
 				System.out.println("編集成功");
 				return true;
 			}

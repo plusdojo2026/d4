@@ -75,7 +75,7 @@
 			</div>
 			<div class="sum">
 				貯蓄<br>
-				<fmt:formatNumber value="${incomeSum - expenseSum}" type="number"/>
+				<p class="saving"><fmt:formatNumber value="${incomeSum - expenseSum}" type="number"/></p>
 			</div>
 		</div>
 		
@@ -123,27 +123,29 @@
 										<input type="hidden" name="month" value="${bpView.bp.month}">
 										<input type="hidden" name="day" value="${bpView.bp.day}">
 										<input type="hidden" name="date" value="${search.date}">
-										<input type="hidden" name="year" value="${selectedYear}">
-										<input type="hidden" name="month" value="${selectedMonth}">
-										<input type="hidden" name="keyword" value="${enteredKeyword}">
-										<input type="hidden" name="sort" value="${selectedSort}">
+										<input type="hidden" name="selected-year" value="${selectedYear}">
+										<input type="hidden" name="selected-month" value="${selectedMonth}">
+										<input type="hidden" name="entered-keyword" value="${enteredKeyword}">
+										<input type="hidden" name="selected-sort" value="${selectedSort}">
 									</form>
 									<form method="POST" class="bp-delete" action="/d4/SearchServlet">
 										<input type="submit" name="submit" id="delete" class="btn" value="削除">
 										<input type="hidden" name="id" value="${bpView.bp.id}">
-										<input type="hidden" name="year" value="${selectedYear}">
-										<input type="hidden" name="month" value="${selectedMonth}">
-										<input type="hidden" name="keyword" value="${enteredKeyword}">
-										<input type="hidden" name="sort" value="${selectedSort}">
+										<input type="hidden" name="selected-year" value="${selectedYear}">
+										<input type="hidden" name="selected-month" value="${selectedMonth}">
+										<input type="hidden" name="entered-keyword" value="${enteredKeyword}">
+										<input type="hidden" name="selected-sort" value="${selectedSort}">
 									</form>
 								</div>
 							</div>
 						</c:forEach>
 					</div>
 			</c:forEach>
-			<c:if test="${searchList.size() > 50}">
-				<button id="more">↓↓↓</button>
-			</c:if>
+			<div id="more">
+				<c:if test="${searchList.size() > 50}">
+					<button>追加で表示</button>
+				</c:if>
+			</div>
 		</div>
 	</main>
 	<!-- フッター -->

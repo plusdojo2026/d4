@@ -56,7 +56,7 @@ input[type="submit"] {
 	border-radius: 30px;
 	color: #FFFFFF;
 	background-color: orange;
-	border-color: rgb(255, 134, 62);
+	border: 1.7px solid rgb(255, 113, 28);
 	font-weight: bold;
 }
 

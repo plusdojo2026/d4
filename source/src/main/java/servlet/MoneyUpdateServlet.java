@@ -58,6 +58,10 @@ public class MoneyUpdateServlet extends HttpServlet {
 			String month = request.getParameter("month");
 			String day = request.getParameter("day");
 			String memo = request.getParameter("memo");
+			String selectedYear = request.getParameter("selected-year");
+			String selectedMonth = request.getParameter("selected-month");
+			String enteredKeyword = request.getParameter("entered-keyword");
+			String selectedSort = request.getParameter("selected-sort");
 			
 			date = date.replaceAll("/", "-");
 			
@@ -72,6 +76,10 @@ public class MoneyUpdateServlet extends HttpServlet {
 			request.setAttribute("date", date);
 			request.setAttribute("incomeCategoryList", incomeCategoryList);
 			request.setAttribute("expenseCategoryList", expenseCategoryList);
+			request.setAttribute("selectedYear", selectedYear);
+			request.setAttribute("selectedMonth", selectedMonth);
+			request.setAttribute("enteredKeyword", enteredKeyword);
+			request.setAttribute("selectedSort", selectedSort);
 
 			System.out.println("-----------------------------------");
 			// 編集ページにフォワードする

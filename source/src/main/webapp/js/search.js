@@ -5,29 +5,6 @@
 
 'use strict';
 
-// 51日目以降の表示
-let displayCount = 50;
-
-document.getElementById("more").onclick = function() {
-	
-	let items = document.querySelectorAll(".date-block");
-	
-	for (let i = displayCount; i <displayCount + 50; i++) {
-		
-		if (items[i]) {
-			items[i].style.display = "block";
-		}
-		
-	}
-	
-	displayCount += 50;
-	
-	if(displayCount >= items.length) {
-		this.style.display = "none";
-		
-	}
-}
-
 const FORM = document.querySelectorAll('.bp-delete');
 
 function toggleDetail(dateHeader) {
@@ -90,3 +67,47 @@ FORM.forEach(f => {
 		}
 	}
 });
+
+function clampTo8Digits(selector) {
+    const el = document.querySelector(selector);
+    if (!el) return;
+
+    let num = el.textContent.replace(/,/g, "");
+    console.log(num);
+
+    if (!/^[0-9]+$/.test(num)) return;
+
+    if (num.length > 8) {
+		console.log("文字数判定中");
+        num = "99999999";
+    }
+
+    el.textContent = Number(num).toLocaleString();
+}
+
+clampTo8Digits(".income");
+clampTo8Digits(".expense");
+clampTo8Digits(".saving");
+
+// 51日目以降の表示
+let displayCount = 50;
+
+document.getElementById("more").onclick = function() {
+	
+	let items = document.querySelectorAll(".date-block");
+	
+	for (let i = displayCount; i <displayCount + 50; i++) {
+		
+		if (items[i]) {
+			items[i].style.display = "block";
+		}
+		
+	}
+	
+	displayCount += 50;
+	
+	if(displayCount >= items.length) {
+		this.style.display = "none";
+		
+	}
+}

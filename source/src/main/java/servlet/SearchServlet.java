@@ -54,6 +54,12 @@ public class SearchServlet extends HttpServlet {
 			// セッションスコープからメールの値を取得
 			String mail = loginUser.getMail();
 			
+			// 編集ページから「戻る」ボタンで戻ってきた検索条件を取得
+			String selectedYear = request.getParameter("selected-year");
+			String selectedMonth = request.getParameter("selected-month");
+			String enteredKeyword = request.getParameter("entered-keyword");
+			String selectedSort = request.getParameter("selected-sort");
+			
 			// サーバー側で現在日時を取得
 			Date now = new Date();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM");
@@ -65,8 +71,22 @@ public class SearchServlet extends HttpServlet {
 			String nYear = parts[0];
 			String nMonth = parts[1];
 			
-			request.setAttribute("selectedYear", String.valueOf(Integer.parseInt(nYear)));
-			request.setAttribute("selectedMonth", String.valueOf(Integer.parseInt(nMonth)));
+			if (selectedYear == null || selectedYear.isEmpty()) {
+				selectedYear = nYear;
+			} 
+			
+			if (selectedMonth == null || selectedMonth.isEmpty()) {
+				selectedMonth = nMonth;
+			}
+			
+			if (selectedMonth != null && !selectedMonth.equals("ALL")) {
+				selectedMonth = String.valueOf(Integer.parseInt(selectedMonth));
+			}
+			
+			request.setAttribute("selectedYear", selectedYear);
+			request.setAttribute("selectedMonth", selectedMonth);
+			request.setAttribute("enteredKeyword", enteredKeyword);
+			request.setAttribute("selectedSort", selectedSort);
 			
 			// セレクトボックスに表示する年と月の範囲指定
 			List<String> yearList = new ArrayList<>();
@@ -93,12 +113,22 @@ public class SearchServlet extends HttpServlet {
 			request.setAttribute("yearList", yearList);
 			request.setAttribute("monthList", monthList);
 			
+			// ALLを０文字以上の任意の文字に変換する
+			if ("ALL".equals(selectedYear)) {
+				selectedYear = "%";
+			}
+			if ("ALL".equals(selectedMonth)) {
+				selectedMonth = "%";
+			} else if (selectedMonth != null) {
+				selectedMonth = String.format("%02d", Integer.parseInt(selectedMonth));
+			}
+			
 			// 初期表示として当月の収支データを取得
 			List<SearchResult> srList = new ArrayList<SearchResult>();
 			BpDAO bpDao = new BpDAO();
 			
 			// 登録情報をリストに格納
-			srList = bpDao.searchSelect(mail, nYear, nMonth, SORT_DEFAULT, ""); 
+			srList = bpDao.searchSelect(mail, selectedYear, selectedMonth, SORT_DEFAULT, ""); 
 			int incomeSum = 0;
 			int expenseSum = 0;
 			for (SearchResult sr : srList) {

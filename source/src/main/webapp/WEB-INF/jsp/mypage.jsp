@@ -95,7 +95,7 @@
 		<div class="img-input">
 			<input type="file" form="input-img-form" name="photo" accept="image/*">
 			<form method="POST" action="/d4/MyPageServlet" id="input-img-form" enctype="multipart/form-data">
-				<label>
+				<label class="upload-box">
 					<input type="submit" class="up-load" value="アップロード">
 				</label>
 			</form>

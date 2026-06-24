@@ -31,10 +31,12 @@ public class UserDAO {
 
 		try {
 			con = getConnection();
-
+			
+			System.out.println("SELECT文を準備中");
 			// SELECT文を準備する
-			String sql = "SELECT * FROM User WHERE BINARY `mail`=? AND BINARY `pass`=?";
+			String sql = "SELECT * FROM `User` WHERE BINARY `mail`=? AND BINARY `pass`=?";
 			pStmt = con.prepareStatement(sql);
+			System.out.println("SELECT文を準備完了");
 
 			// ？の部分に値を入れる処理
 			pStmt.setString(1, inputUser.getMail());
@@ -89,7 +91,7 @@ public class UserDAO {
 			pStmt.setString(4, user.getMail());
 
 			// UPDATE文を実行してpStmtのclose処理
-			if(pStmt.executeUpdate() >= 1) {
+			if(pStmt.executeUpdate() >= 0) {
 				System.out.println("更新完了");
 				return true;
 			}

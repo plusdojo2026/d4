@@ -48,7 +48,7 @@
 			</div>
 			<div class="sum">
 				貯蓄<br>
-				<fmt:formatNumber value="${yearIncome-yearExpense}" type="number"/>
+				<p class="saving"><fmt:formatNumber value="${yearIncome-yearExpense}" type="number"/></p>
 			</div>
 		</div>
 		
