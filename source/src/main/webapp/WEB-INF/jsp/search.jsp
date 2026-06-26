@@ -131,10 +131,10 @@
 									<form method="POST" class="bp-delete" action="/d4/SearchServlet">
 										<input type="submit" name="submit" id="delete" class="btn" value="削除">
 										<input type="hidden" name="id" value="${bpView.bp.id}">
-										<input type="hidden" name="selected-year" value="${selectedYear}">
-										<input type="hidden" name="selected-month" value="${selectedMonth}">
-										<input type="hidden" name="entered-keyword" value="${enteredKeyword}">
-										<input type="hidden" name="selected-sort" value="${selectedSort}">
+										<input type="hidden" name="year" value="${selectedYear}">
+										<input type="hidden" name="month" value="${selectedMonth}">
+										<input type="hidden" name="keyword" value="${enteredKeyword}">
+										<input type="hidden" name="sort" value="${selectedSort}">
 									</form>
 								</div>
 							</div>

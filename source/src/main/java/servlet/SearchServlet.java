@@ -83,6 +83,10 @@ public class SearchServlet extends HttpServlet {
 				selectedMonth = String.valueOf(Integer.parseInt(selectedMonth));
 			}
 			
+			if (enteredKeyword == null) {
+				enteredKeyword = "";
+			}
+			
 			request.setAttribute("selectedYear", selectedYear);
 			request.setAttribute("selectedMonth", selectedMonth);
 			request.setAttribute("enteredKeyword", enteredKeyword);
@@ -123,12 +127,22 @@ public class SearchServlet extends HttpServlet {
 				selectedMonth = String.format("%02d", Integer.parseInt(selectedMonth));
 			}
 			
+			int sortType;
+			
+			if ("ASC".equals(selectedSort)) {
+				sortType = SORT_ASC;
+			} else if ("DESC".equals(selectedSort)) {
+				sortType = SORT_DESC;
+			} else {
+				sortType = SORT_DEFAULT;
+			}
+			
 			// 初期表示として当月の収支データを取得
 			List<SearchResult> srList = new ArrayList<SearchResult>();
 			BpDAO bpDao = new BpDAO();
 			
 			// 登録情報をリストに格納
-			srList = bpDao.searchSelect(mail, selectedYear, selectedMonth, SORT_DEFAULT, ""); 
+			srList = bpDao.searchSelect(mail, selectedYear, selectedMonth, sortType, enteredKeyword); 
 			int incomeSum = 0;
 			int expenseSum = 0;
 			for (SearchResult sr : srList) {

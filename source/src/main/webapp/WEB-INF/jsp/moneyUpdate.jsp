@@ -76,11 +76,15 @@
 			</div>
 			<input type="hidden" name="id" value="${bp.id}">
 			<input type="hidden" name="cid" class="hidden-cid" value="${cid}">
+			<input type="hidden" name="selected-year" value="${selectedYear}">
+			<input type="hidden" name="selected-month" value="${selectedMonth}">
+			<input type="hidden" name="entered-keyword" value="${enteredKeyword}">
+			<input type="hidden" name="selected-sort" value="${selectedSort}">
 		</form>
 		
 		<form method="GET" action="/d4/SearchServlet" id="return-form">
 			<input type="hidden" name="selected-year" value="${selectedYear}">
-			<input type="hidden" name="selected-month" class="hidden-cid" value="${selectedMonth}">
+			<input type="hidden" name="selected-month" value="${selectedMonth}">
 			<input type="hidden" name="entered-keyword" value="${enteredKeyword}">
 			<input type="hidden" name="selected-sort" value="${selectedSort}">
 		</form>	
@@ -121,7 +125,14 @@
 	<c:if test="${success == true}">
 		<script>
 			alert("編集成功！");
-			window.location.href = "/d4/SearchServlet";
+			const PARAM = new URLSearchParams({
+				  "selected-year": "${selectedYear}",
+				  "selected-month": "${selectedMonth}",
+				  "entered-keyword": "${enteredKeyword}",
+				  "selected-sort": "${selectedSort}"
+				});
+				
+				window.location.href = '/d4/SearchServlet?' + PARAM.toString();
 		</script>
 	</c:if>
 </body>

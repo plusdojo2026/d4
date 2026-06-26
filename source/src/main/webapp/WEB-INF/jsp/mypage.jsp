@@ -32,7 +32,7 @@
 		<div class="purpose-title">
 			<img src="img/purpose-icon.png">
 			<c:if test="${not empty loginUser.name}">
-				<c:out value="${loginUser.name}"/>さんの
+				<span id="nick-name"><c:out value="${loginUser.name}"/>さんの</span>
 			</c:if>
 			目的
 		</div>

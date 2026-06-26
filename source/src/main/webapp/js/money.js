@@ -5,6 +5,23 @@
 
 'use strict';
 
+const SELECT = document.querySelector('.select-box');
+
+window.addEventListener('load', () => {
+		SELECT.dispatchEvent(new Event('change'));
+});
+
+SELECT.addEventListener('change', () => {
+	const SELECTED = SELECT.options[SELECT.selectedIndex].text;
+	const LENGTH = SELECTED.length;
+	
+	if(LENGTH > 8) {
+		SELECT.style.fontSize = '9px';
+	} else {
+		SELECT.style.fontSize = '12px';
+	}
+});
+
 const INCOME_BTN = document.querySelector(".income-btn");
 const EXPENSE_BTN = document.querySelector(".expense-btn");
 const SELECT_BOX = document.querySelector(".select-box");

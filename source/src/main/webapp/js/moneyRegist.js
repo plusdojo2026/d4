@@ -35,7 +35,7 @@ form.onsubmit = function(event) {
 		MONEY_INPUT.style.border = 'solid 2px #FF0000';
 	} else if(MONEY_VALIDATION.test(money)) {
 		let intMoney = Number(money);
-		if(!Number.isInteger(intMoney) || intMoney <= 0 || intMoney >= 1000000000){
+		if(!Number.isInteger(intMoney) || intMoney <= 0 || intMoney >= 100000000){
 			judge = false;
 			moneyErrorMsg.textContent = '※範囲外の数字です';
 			MONEY_INPUT.style.border = 'solid 2px #FF0000';

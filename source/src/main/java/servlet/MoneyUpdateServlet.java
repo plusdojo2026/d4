@@ -126,7 +126,11 @@ public class MoneyUpdateServlet extends HttpServlet {
 			int money = Integer.parseInt(request.getParameter("money"));
 			String date = request.getParameter("date");
 			String memo = request.getParameter("memo");
-	
+			String selectedYear = request.getParameter("selected-year");
+			String selectedMonth = request.getParameter("selected-month");
+			String enteredKeyword = request.getParameter("entered-keyword");
+			String selectedSort = request.getParameter("selected-sort");
+			
 			// 取得したdateをyear,month,dayに分割する処理
 			String[] parts = date.split("\\-");
 	
@@ -141,7 +145,11 @@ public class MoneyUpdateServlet extends HttpServlet {
 			boolean result = bpDao.update(bp);
 			if (result) {
 				System.out.println("収支編集成功！");
-				request.setAttribute("success", "true");
+				request.setAttribute("success", true);
+				request.setAttribute("selectedYear", selectedYear);
+				request.setAttribute("selectedMonth", selectedMonth);
+				request.setAttribute("enteredKeyword", enteredKeyword);
+				request.setAttribute("selectedSort", selectedSort);
 				System.out.println("-----------------------------------");
 				RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/moneyUpdate.jsp");
 				dispatcher.forward(request, response);

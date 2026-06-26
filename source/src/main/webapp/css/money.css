@@ -48,7 +48,7 @@
 .income-btn.active {
 	color: #000080;
 	background-color: #efefef;
-	border-color: #0080ff;
+	border-color: #000080;
 }
 .expense-btn {
 	color: #ff0000;
@@ -56,7 +56,7 @@
 .expense-btn.active {
 	color: #800040;
 	background-color: #efefef;
-	border-color: #ff0000;
+	border-color: #800040;
 }
 
 /* フォーム */
@@ -88,13 +88,17 @@
 
 .cat-input {
 	text-align: right;
-	width: 52%;
+	width: 53%;
 }
 
 input[type="date"], input[type="text"], select, textarea {
 	width: 100%;
 	border: none; /*枠線なくす*/
 	outline: none;
+}
+
+select {
+	font-size: 10px;
 }
 
 option{

@@ -75,7 +75,7 @@ public class PurposeDAO {
 			pStmt.setString(1, mail);
 
 			// 削除できたかを確認する
-			if(pStmt.executeUpdate() >= 1) {
+			if(pStmt.executeUpdate() >= 0) {
 				System.out.println("削除成功");
 				return true;
 			}

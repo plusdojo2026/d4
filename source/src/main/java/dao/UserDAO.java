@@ -157,7 +157,7 @@ public class UserDAO {
 			con = getConnection();
 
 			// DELETE文を準備する
-			String sql = "DELETE FROM User WHERE mail = ?";
+			String sql = "DELETE FROM `User` WHERE mail=?";
 			pStmt = con.prepareStatement(sql);
 
 			// ？の部分に値を入れる

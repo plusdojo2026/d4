@@ -132,6 +132,17 @@ public class SetServlet extends HttpServlet {
 				System.out.println("アカウント削除処理");
 				
 				if(!bDao.delete(mail)) {
+					request.setAttribute("errorMsg", "収支削除に失敗しました！");
+					request.setAttribute("goTo", "/d4/SetServlet");
+					
+					System.out.println("-----------------------------------");
+					
+					// 結果ページにフォワードする
+					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/result.jsp");
+					dispatcher.forward(request, response);
+					return;
+				}
+				if(!cDao.delete(mail)) {
 					request.setAttribute("errorMsg", "カテゴリ削除に失敗しました！");
 					request.setAttribute("goTo", "/d4/SetServlet");
 					
@@ -153,7 +164,7 @@ public class SetServlet extends HttpServlet {
 					dispatcher.forward(request, response);
 					return;
 				}
-				if(pDao.delete(mail)) {
+				if(!pDao.delete(mail)) {
 					request.setAttribute("errorMsg", "目的削除に失敗しました！");
 					request.setAttribute("goTo", "/d4/SetServlet");
 					
@@ -178,7 +189,7 @@ public class SetServlet extends HttpServlet {
 				} else {
 					System.out.println("削除成功！");
 					System.out.println("-----------------------------------");
-					request.setAttribute("success", "成功");
+					request.setAttribute("success", true);
 					RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/jsp/set.jsp");
 					dispatcher.forward(request, response);
 				}

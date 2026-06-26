@@ -94,12 +94,12 @@ td {
 
 .saving-title {
 	font-weight: normal;
-	width: 45%;
+	width: 36%;
 }
 
 .saving-amount {
 	font-weight: normal;
-	width: 55%;
+	width: 64%;
 }
 
 /* 画像設定コンテンツ(後からできたらやる部分) */
@@ -145,6 +145,7 @@ input[type="file"]{
 
 .img {
 	max-width: 70%;
+	min-width: 70%;
 	width: auto;
 	height: auto;
 }

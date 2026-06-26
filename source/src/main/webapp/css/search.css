@@ -1,7 +1,8 @@
 /* 作成日：2026/06/18
  * 作成者：佐藤
- * 更新者：服部
- * 更新日：2026/06/22 */
+ * 更新日：2026/06/22
+ * 更新者：服部 */
+ 
 @charset "UTF-8";
 
 /*ヘッダー*/
@@ -47,7 +48,7 @@ button {
 /* 並び替え */
 .sort {
 	text-align: right;
-	padding-left: 20px;
+	padding-left: 3%;
 }
 
 .sort, .sort select {
@@ -56,11 +57,22 @@ button {
 
 /* 収支と貯蓄合計 */
 .sum-box {
+	margin-bottom: 5%;
 	display: flex;
+	white-space: nowrap;
 	justify-content: space-evenly;
-	padding-top: 30px;
 	text-align: center;
 	font-size: 18px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	padding-top: 30px;
+}
+
+.sum {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	width: 30%;
 }
 
 .income {
@@ -73,6 +85,10 @@ button {
 
 .income, .expense, .saving {
 	margin: 0;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 100%;
 }
 /* 収支表示 */
 .search-table {
@@ -108,31 +124,51 @@ button {
 
 /* 詳細 */
 .date-detail {
+	position: relative;
 	display: none;
 	margin: 3% 5%;
+	padding-left:10px;
+	align-items: center;
+	justify-content: center;
 	width: 90%;
 	height: 30px;
 	background-color: #ffffff;
 	border: solid 2px #ffea7e;
 	border-radius: 8px;
+
 }
 
 .bp {
 	display: flex;
-	font-weight: 500;
-	margin-top: 1%;
-	margin-left: 3%;
+	align-items: center;
+	height: 100%;
+	gap: 8px;
 }
 
+.bp > span {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	width: 90px;
+	text-align: left;
+	font-size: 11px;
+	flex-shrink: 0;
+	font-weight: 450;
+}
 .bp-right {
-	display: flex;
-	font-weight: 400;
-	margin-left: 15%;
-	gap: 30px;
+	width: 60px;
+	font-weight: 500;
+	font-size: 11px;
 }
 
-.memo {
-	font-size: 10px;
+.bp > span.memo {
+	font-size: 9px;
+	font-weight: 350;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	flex: 1;
+	min-width: 0;
 }
 /* 隠しメニュー表示ボタン */
 .menu-btn {
@@ -140,12 +176,14 @@ button {
 	margin-right: 5px;
 	width: 22px;
 	height: 22px;
+	cursor: pointer;
 }
 .menu-btn.clicked {
 	background-color: #eaeaea;
 	border-radius: 50px;
 }
 .menu {
+	position: absolute;
 	display: flex;
 	display: none;
 	flex-direction: column;
@@ -154,16 +192,21 @@ button {
 	right: 0;
 	text-align: right;
 	margin-right: 20px;
-	z-index: 10000;
+	z-index: 1000;
+	border: 1px solid #0080ff;
+	border-radius: 5px;
 }
 .btn {
 	color: black;
+	padding: 5px 8px;
 	background-color: #ffffff;
+	border: none;
 	border-radius: 5px;
-	border: 1px solid #0080ff;
-	z-index: 9999;
 }
 #delete {
+	border-top-right-radius: 0px;
+	border-top-left-radius: 0px;
+	border-top: 0.8px solid #0080ff;
 	color: #ff0000;
 }
 #more button {

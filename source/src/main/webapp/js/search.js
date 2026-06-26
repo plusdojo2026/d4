@@ -1,7 +1,7 @@
 /* 作成日：2026/06/19
  * 作成者：服部
- * 更新日：服部、木下
- * 更新者：2026/06/22 */
+ * 更新日：服部、木下、深井
+ * 更新者：2026/06/25 */
 
 'use strict';
 
@@ -20,22 +20,6 @@ function toggleDetail(dateHeader) {
 	
 	ARROW.src = IS_OPEN ? 'img/down-list.png' : 'img/up-list.png';
 	
-	const MEMOS = DATE_BLOCK.querySelectorAll(".memo");
-	console.log(MEMOS.length);
-	
-	MEMOS.forEach(function(memo) {
-		
-		if(!memo.dataset.full) {
-			memo.dataset.full = memo.textContent;
-		}
-		
-		const text = memo.dataset.full;
-		
-		if (text.length > 15) {
-			memo.textContent = text.substring(0, 15) + "…";
-		}
-		
-	});
 }
 
 function toggleMenu(menuBtn) {
@@ -55,6 +39,7 @@ function toggleMenu(menuBtn) {
 	
 	const IS_OPEN = MENU.style.display === 'block';
 	MENU.style.display = IS_OPEN ? 'none' : 'block' ;
+	IS_OPEN ? menuBtn.classList.remove('clicked') :
 	menuBtn.classList.add('clicked');
 	
 }
@@ -68,7 +53,7 @@ FORM.forEach(f => {
 	}
 });
 
-function clampTo8Digits(selector) {
+/* function clampTo8Digits(selector) {
     const el = document.querySelector(selector);
     if (!el) return;
 
@@ -78,16 +63,17 @@ function clampTo8Digits(selector) {
     if (!/^[0-9]+$/.test(num)) return;
 
     if (num.length > 8) {
-		console.log("文字数判定中");
-        num = "99999999";
+        const short = num.substring(0, 5);
+        el.textContent = short + "...";
+        return;
     }
 
     el.textContent = Number(num).toLocaleString();
-}
+} 
 
 clampTo8Digits(".income");
 clampTo8Digits(".expense");
-clampTo8Digits(".saving");
+clampTo8Digits(".saving"); */
 
 // 51日目以降の表示
 let displayCount = 50;
